@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EPHECModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="cours">
+    <Key>
+      <PropertyRef Name="cours_id" />
+    </Key>
+    <Property Name="cours_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="code" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="libelle" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="section" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="annee" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="demandeurCours" Relationship="Self.FK_demandeurCours_cours" FromRole="cours" ToRole="demandeurCours" />
+    <NavigationProperty Name="etuResult" Relationship="Self.FK_etuResult_cours" FromRole="cours" ToRole="etuResult" />
+    <NavigationProperty Name="tuteurCours" Relationship="Self.FK_tuteurCours_cours" FromRole="cours" ToRole="tuteurCours" />
+    <NavigationProperty Name="etudiant" Relationship="Self.etuCours" FromRole="cours" ToRole="etudiant" />
+  </EntityType>
+  <EntityType Name="demandeur">
+    <Key>
+      <PropertyRef Name="demandeur_id" />
+    </Key>
+    <Property Name="demandeur_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="matricule" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="dateInsc" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="demandeurCours" Relationship="Self.FK_demandeurCours_demandeur" FromRole="demandeur" ToRole="demandeurCours" />
+  </EntityType>
+  <EntityType Name="demandeurCours">
+    <Key>
+      <PropertyRef Name="demandeur_id" />
+      <PropertyRef Name="cours_id" />
+    </Key>
+    <Property Name="demandeur_id" Type="Int32" Nullable="false" />
+    <Property Name="cours_id" Type="Int32" Nullable="false" />
+    <Property Name="tutorat_id" Type="Int32" Nullable="false" />
+    <Property Name="commentaire" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="cours" Relationship="Self.FK_demandeurCours_cours" FromRole="demandeurCours" ToRole="cours" />
+    <NavigationProperty Name="demandeur" Relationship="Self.FK_demandeurCours_demandeur" FromRole="demandeurCours" ToRole="demandeur" />
+    <NavigationProperty Name="tutorat" Relationship="Self.FK_demandeurCours_tutorat" FromRole="demandeurCours" ToRole="tutorat" />
+  </EntityType>
+  <EntityType Name="etudiant">
+    <Key>
+      <PropertyRef Name="etudiant_id" />
+    </Key>
+    <Property Name="etudiant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="matricule" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="prenom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="section" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="annee" Type="Int32" Nullable="false" />
+    <Property Name="groupe" Type="String" MaxLength="4" FixedLength="true" Unicode="false" />
+    <Property Name="mail" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="etuResult" Relationship="Self.FK_etuResult_etudiant" FromRole="etudiant" ToRole="etuResult" />
+    <NavigationProperty Name="cours" Relationship="Self.etuCours" FromRole="etudiant" ToRole="cours" />
+  </EntityType>
+  <EntityType Name="etuResult">
+    <Key>
+      <PropertyRef Name="etuResult_id" />
+    </Key>
+    <Property Name="etuResult_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="etudiant_id" Type="Int32" Nullable="false" />
+    <Property Name="cours_id" Type="Int32" Nullable="false" />
+    <Property Name="cote" Type="Int32" />
+    <NavigationProperty Name="cours" Relationship="Self.FK_etuResult_cours" FromRole="etuResult" ToRole="cours" />
+    <NavigationProperty Name="etudiant" Relationship="Self.FK_etuResult_etudiant" FromRole="etuResult" ToRole="etudiant" />
+  </EntityType>
+  <EntityType Name="prestation">
+    <Key>
+      <PropertyRef Name="prestation_id" />
+    </Key>
+    <Property Name="prestation_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tuteur_id" Type="Int32" Nullable="false" />
+    <Property Name="dateFeuille" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="tuteur" Relationship="Self.FK_prestation_tuteur" FromRole="prestation" ToRole="tuteur" />
+    <NavigationProperty Name="prestationTutorat" Relationship="Self.FK_prestationTutorat_prestation" FromRole="prestation" ToRole="prestationTutorat" />
+  </EntityType>
+  <EntityType Name="prestationTutorat">
+    <Key>
+      <PropertyRef Name="presTutorat_id" />
+    </Key>
+    <Property Name="presTutorat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dureePrest" Type="Int32" Nullable="false" />
+    <Property Name="prestation_id" Type="Int32" Nullable="false" />
+    <Property Name="tutorat_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="prestation" Relationship="Self.FK_prestationTutorat_prestation" FromRole="prestationTutorat" ToRole="prestation" />
+    <NavigationProperty Name="tutorat" Relationship="Self.FK_prestationTutorat_tutorat" FromRole="prestationTutorat" ToRole="tutorat" />
+  </EntityType>
+  <EntityType Name="tuteur">
+    <Key>
+      <PropertyRef Name="tuteur_id" />
+    </Key>
+    <Property Name="tuteur_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="matricule" Type="String" MaxLength="8" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="dateInsc" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="prestation" Relationship="Self.FK_prestation_tuteur" FromRole="tuteur" ToRole="prestation" />
+    <NavigationProperty Name="tuteurCours" Relationship="Self.FK_tuteurCours_tuteur" FromRole="tuteur" ToRole="tuteurCours" />
+  </EntityType>
+  <EntityType Name="tuteurCours">
+    <Key>
+      <PropertyRef Name="tuteur_id" />
+      <PropertyRef Name="cours_id" />
+    </Key>
+    <Property Name="tuteur_id" Type="Int32" Nullable="false" />
+    <Property Name="cours_id" Type="Int32" Nullable="false" />
+    <Property Name="tutorat_id" Type="Int32" Nullable="false" />
+    <Property Name="commentaire" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="cours" Relationship="Self.FK_tuteurCours_cours" FromRole="tuteurCours" ToRole="cours" />
+    <NavigationProperty Name="tuteur" Relationship="Self.FK_tuteurCours_tuteur" FromRole="tuteurCours" ToRole="tuteur" />
+    <NavigationProperty Name="tutorat" Relationship="Self.FK_tuteurCours_tutorat" FromRole="tuteurCours" ToRole="tutorat" />
+  </EntityType>
+  <EntityType Name="tutorat">
+    <Key>
+      <PropertyRef Name="tutorat_id" />
+    </Key>
+    <Property Name="tutorat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="demandeur_id" Type="Int32" Nullable="false" />
+    <Property Name="cours_id" Type="Int32" Nullable="false" />
+    <Property Name="commentaire" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="dateResign" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="demandeurCours" Relationship="Self.FK_demandeurCours_tutorat" FromRole="tutorat" ToRole="demandeurCours" />
+    <NavigationProperty Name="prestationTutorat" Relationship="Self.FK_prestationTutorat_tutorat" FromRole="tutorat" ToRole="prestationTutorat" />
+    <NavigationProperty Name="tuteurCours" Relationship="Self.FK_tuteurCours_tutorat" FromRole="tutorat" ToRole="tuteurCours" />
+  </EntityType>
+  <Association Name="FK_demandeurCours_cours">
+    <End Role="cours" Type="Self.cours" Multiplicity="1" />
+    <End Role="demandeurCours" Type="Self.demandeurCours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cours">
+        <PropertyRef Name="cours_id" />
+      </Principal>
+      <Dependent Role="demandeurCours">
+        <PropertyRef Name="cours_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_etuResult_cours">
+    <End Role="cours" Type="Self.cours" Multiplicity="1" />
+    <End Role="etuResult" Type="Self.etuResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cours">
+        <PropertyRef Name="cours_id" />
+      </Principal>
+      <Dependent Role="etuResult">
+        <PropertyRef Name="cours_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tuteurCours_cours">
+    <End Role="cours" Type="Self.cours" Multiplicity="1" />
+    <End Role="tuteurCours" Type="Self.tuteurCours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cours">
+        <PropertyRef Name="cours_id" />
+      </Principal>
+      <Dependent Role="tuteurCours">
+        <PropertyRef Name="cours_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_demandeurCours_demandeur">
+    <End Role="demandeur" Type="Self.demandeur" Multiplicity="1" />
+    <End Role="demandeurCours" Type="Self.demandeurCours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="demandeur">
+        <PropertyRef Name="demandeur_id" />
+      </Principal>
+      <Dependent Role="demandeurCours">
+        <PropertyRef Name="demandeur_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_demandeurCours_tutorat">
+    <End Role="tutorat" Type="Self.tutorat" Multiplicity="1" />
+    <End Role="demandeurCours" Type="Self.demandeurCours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tutorat">
+        <PropertyRef Name="tutorat_id" />
+      </Principal>
+      <Dependent Role="demandeurCours">
+        <PropertyRef Name="tutorat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_etuResult_etudiant">
+    <End Role="etudiant" Type="Self.etudiant" Multiplicity="1" />
+    <End Role="etuResult" Type="Self.etuResult" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="etudiant">
+        <PropertyRef Name="etudiant_id" />
+      </Principal>
+      <Dependent Role="etuResult">
+        <PropertyRef Name="etudiant_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_prestation_tuteur">
+    <End Role="tuteur" Type="Self.tuteur" Multiplicity="1" />
+    <End Role="prestation" Type="Self.prestation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tuteur">
+        <PropertyRef Name="tuteur_id" />
+      </Principal>
+      <Dependent Role="prestation">
+        <PropertyRef Name="tuteur_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_prestationTutorat_prestation">
+    <End Role="prestation" Type="Self.prestation" Multiplicity="1" />
+    <End Role="prestationTutorat" Type="Self.prestationTutorat" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="prestation">
+        <PropertyRef Name="prestation_id" />
+      </Principal>
+      <Dependent Role="prestationTutorat">
+        <PropertyRef Name="presTutorat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_prestationTutorat_tutorat">
+    <End Role="tutorat" Type="Self.tutorat" Multiplicity="1" />
+    <End Role="prestationTutorat" Type="Self.prestationTutorat" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tutorat">
+        <PropertyRef Name="tutorat_id" />
+      </Principal>
+      <Dependent Role="prestationTutorat">
+        <PropertyRef Name="tutorat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tuteurCours_tuteur">
+    <End Role="tuteur" Type="Self.tuteur" Multiplicity="1" />
+    <End Role="tuteurCours" Type="Self.tuteurCours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tuteur">
+        <PropertyRef Name="tuteur_id" />
+      </Principal>
+      <Dependent Role="tuteurCours">
+        <PropertyRef Name="tuteur_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tuteurCours_tutorat">
+    <End Role="tutorat" Type="Self.tutorat" Multiplicity="1" />
+    <End Role="tuteurCours" Type="Self.tuteurCours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tutorat">
+        <PropertyRef Name="tutorat_id" />
+      </Principal>
+      <Dependent Role="tuteurCours">
+        <PropertyRef Name="tutorat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="etuCours">
+    <End Role="cours" Type="Self.cours" Multiplicity="*" />
+    <End Role="etudiant" Type="Self.etudiant" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="EPHECDatabase" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="cours" EntityType="Self.cours" />
+    <EntitySet Name="demandeur" EntityType="Self.demandeur" />
+    <EntitySet Name="demandeurCours" EntityType="Self.demandeurCours" />
+    <EntitySet Name="etudiant" EntityType="Self.etudiant" />
+    <EntitySet Name="etuResult" EntityType="Self.etuResult" />
+    <EntitySet Name="prestation" EntityType="Self.prestation" />
+    <EntitySet Name="prestationTutorat" EntityType="Self.prestationTutorat" />
+    <EntitySet Name="tuteur" EntityType="Self.tuteur" />
+    <EntitySet Name="tuteurCours" EntityType="Self.tuteurCours" />
+    <EntitySet Name="tutorat" EntityType="Self.tutorat" />
+    <AssociationSet Name="FK_demandeurCours_cours" Association="Self.FK_demandeurCours_cours">
+      <End Role="cours" EntitySet="cours" />
+      <End Role="demandeurCours" EntitySet="demandeurCours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_etuResult_cours" Association="Self.FK_etuResult_cours">
+      <End Role="cours" EntitySet="cours" />
+      <End Role="etuResult" EntitySet="etuResult" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tuteurCours_cours" Association="Self.FK_tuteurCours_cours">
+      <End Role="cours" EntitySet="cours" />
+      <End Role="tuteurCours" EntitySet="tuteurCours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_demandeurCours_demandeur" Association="Self.FK_demandeurCours_demandeur">
+      <End Role="demandeur" EntitySet="demandeur" />
+      <End Role="demandeurCours" EntitySet="demandeurCours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_demandeurCours_tutorat" Association="Self.FK_demandeurCours_tutorat">
+      <End Role="tutorat" EntitySet="tutorat" />
+      <End Role="demandeurCours" EntitySet="demandeurCours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_etuResult_etudiant" Association="Self.FK_etuResult_etudiant">
+      <End Role="etudiant" EntitySet="etudiant" />
+      <End Role="etuResult" EntitySet="etuResult" />
+    </AssociationSet>
+    <AssociationSet Name="FK_prestation_tuteur" Association="Self.FK_prestation_tuteur">
+      <End Role="tuteur" EntitySet="tuteur" />
+      <End Role="prestation" EntitySet="prestation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_prestationTutorat_prestation" Association="Self.FK_prestationTutorat_prestation">
+      <End Role="prestation" EntitySet="prestation" />
+      <End Role="prestationTutorat" EntitySet="prestationTutorat" />
+    </AssociationSet>
+    <AssociationSet Name="FK_prestationTutorat_tutorat" Association="Self.FK_prestationTutorat_tutorat">
+      <End Role="tutorat" EntitySet="tutorat" />
+      <End Role="prestationTutorat" EntitySet="prestationTutorat" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tuteurCours_tuteur" Association="Self.FK_tuteurCours_tuteur">
+      <End Role="tuteur" EntitySet="tuteur" />
+      <End Role="tuteurCours" EntitySet="tuteurCours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tuteurCours_tutorat" Association="Self.FK_tuteurCours_tutorat">
+      <End Role="tutorat" EntitySet="tutorat" />
+      <End Role="tuteurCours" EntitySet="tuteurCours" />
+    </AssociationSet>
+    <AssociationSet Name="etuCours" Association="Self.etuCours">
+      <End Role="cours" EntitySet="cours" />
+      <End Role="etudiant" EntitySet="etudiant" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

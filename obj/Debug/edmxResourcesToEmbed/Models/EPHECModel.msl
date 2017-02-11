@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="EPHECModelStoreContainer" CdmEntityContainer="EPHECDatabase">
+    <EntitySetMapping Name="cours">
+      <EntityTypeMapping TypeName="EPHECModel.cours">
+        <MappingFragment StoreEntitySet="cours">
+          <ScalarProperty Name="cours_id" ColumnName="cours_id" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="libelle" ColumnName="libelle" />
+          <ScalarProperty Name="section" ColumnName="section" />
+          <ScalarProperty Name="annee" ColumnName="annee" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="demandeur">
+      <EntityTypeMapping TypeName="EPHECModel.demandeur">
+        <MappingFragment StoreEntitySet="demandeur">
+          <ScalarProperty Name="demandeur_id" ColumnName="demandeur_id" />
+          <ScalarProperty Name="matricule" ColumnName="matricule" />
+          <ScalarProperty Name="dateInsc" ColumnName="dateInsc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="demandeurCours">
+      <EntityTypeMapping TypeName="EPHECModel.demandeurCours">
+        <MappingFragment StoreEntitySet="demandeurCours">
+          <ScalarProperty Name="demandeur_id" ColumnName="demandeur_id" />
+          <ScalarProperty Name="cours_id" ColumnName="cours_id" />
+          <ScalarProperty Name="tutorat_id" ColumnName="tutorat_id" />
+          <ScalarProperty Name="commentaire" ColumnName="commentaire" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="etudiant">
+      <EntityTypeMapping TypeName="EPHECModel.etudiant">
+        <MappingFragment StoreEntitySet="etudiant">
+          <ScalarProperty Name="etudiant_id" ColumnName="etudiant_id" />
+          <ScalarProperty Name="matricule" ColumnName="matricule" />
+          <ScalarProperty Name="prenom" ColumnName="prenom" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="section" ColumnName="section" />
+          <ScalarProperty Name="annee" ColumnName="annee" />
+          <ScalarProperty Name="groupe" ColumnName="groupe" />
+          <ScalarProperty Name="mail" ColumnName="mail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="etuResult">
+      <EntityTypeMapping TypeName="EPHECModel.etuResult">
+        <MappingFragment StoreEntitySet="etuResult">
+          <ScalarProperty Name="etuResult_id" ColumnName="etuResult_id" />
+          <ScalarProperty Name="etudiant_id" ColumnName="etudiant_id" />
+          <ScalarProperty Name="cours_id" ColumnName="cours_id" />
+          <ScalarProperty Name="cote" ColumnName="cote" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="prestation">
+      <EntityTypeMapping TypeName="EPHECModel.prestation">
+        <MappingFragment StoreEntitySet="prestation">
+          <ScalarProperty Name="prestation_id" ColumnName="prestation_id" />
+          <ScalarProperty Name="tuteur_id" ColumnName="tuteur_id" />
+          <ScalarProperty Name="dateFeuille" ColumnName="dateFeuille" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="prestationTutorat">
+      <EntityTypeMapping TypeName="EPHECModel.prestationTutorat">
+        <MappingFragment StoreEntitySet="prestationTutorat">
+          <ScalarProperty Name="presTutorat_id" ColumnName="presTutorat_id" />
+          <ScalarProperty Name="dureePrest" ColumnName="dureePrest" />
+          <ScalarProperty Name="prestation_id" ColumnName="prestation_id" />
+          <ScalarProperty Name="tutorat_id" ColumnName="tutorat_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tuteur">
+      <EntityTypeMapping TypeName="EPHECModel.tuteur">
+        <MappingFragment StoreEntitySet="tuteur">
+          <ScalarProperty Name="tuteur_id" ColumnName="tuteur_id" />
+          <ScalarProperty Name="matricule" ColumnName="matricule" />
+          <ScalarProperty Name="dateInsc" ColumnName="dateInsc" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tuteurCours">
+      <EntityTypeMapping TypeName="EPHECModel.tuteurCours">
+        <MappingFragment StoreEntitySet="tuteurCours">
+          <ScalarProperty Name="tuteur_id" ColumnName="tuteur_id" />
+          <ScalarProperty Name="cours_id" ColumnName="cours_id" />
+          <ScalarProperty Name="tutorat_id" ColumnName="tutorat_id" />
+          <ScalarProperty Name="commentaire" ColumnName="commentaire" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tutorat">
+      <EntityTypeMapping TypeName="EPHECModel.tutorat">
+        <MappingFragment StoreEntitySet="tutorat">
+          <ScalarProperty Name="tutorat_id" ColumnName="tutorat_id" />
+          <ScalarProperty Name="demandeur_id" ColumnName="demandeur_id" />
+          <ScalarProperty Name="cours_id" ColumnName="cours_id" />
+          <ScalarProperty Name="commentaire" ColumnName="commentaire" />
+          <ScalarProperty Name="dateResign" ColumnName="dateResign" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="etuCours" TypeName="EPHECModel.etuCours" StoreEntitySet="etuCours">
+      <EndProperty Name="cours">
+        <ScalarProperty Name="cours_id" ColumnName="cours_id" />
+      </EndProperty>
+      <EndProperty Name="etudiant">
+        <ScalarProperty Name="etudiant_id" ColumnName="etudiant_id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

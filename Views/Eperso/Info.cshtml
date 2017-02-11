@@ -1,0 +1,77 @@
+﻿@model Tutorat.Models.etudiant
+    <!-- Page finie. -->
+
+@{
+    ViewBag.Title = "Informations de l'étudiant connecté";
+}
+
+<h2>@ViewBag.Title</h2>
+<p> Cette page fourni les informations avec lesquelles l'étudiant c'est inscrit. La page sera utilisée en cas de test grandeur réel.</p>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.etudiant_id)
+        </dt>
+
+        <dd>
+            @ViewBag.sec.etudiant_id
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.matricule)
+        </dt>
+
+        <dd>
+            @ViewBag.sec.matricule
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.prenom)
+        </dt>
+
+        <dd>
+            @ViewBag.sec.prenom
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nom)
+        </dt>
+
+        <dd>
+            @ViewBag.sec.nom
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.section)
+        </dt>
+
+        <dd>
+            @ViewBag.sec.section
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.annee)
+        </dt>
+
+        <dd>
+            @ViewBag.sec.annee
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.groupe)
+        </dt>
+
+        <dd>
+            @ViewBag.sec.groupe
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mail)
+        </dt>
+
+        <dd>
+            @ViewBag.sec.mail
+        </dd>
+
+    </dl>
+</div>
