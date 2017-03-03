@@ -2,7 +2,11 @@
 @{
     ViewBag.Title = "Register";
 }
+@section JavaScript
+{
+    <script type="text/javascript" src="@Url.Content("/Scripts/registerScripts.js")"></script>
 
+}
 <h2>@ViewBag.Title.</h2>
 
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -134,22 +138,36 @@
         <!-- AJOUT POUR LES COURS -->
         <hr />
         <h4> Choix des cours : </h4>
-        
-        using (Ajax.BeginForm("Cours", "Eperso", new AjaxOptions()
-        {
-            //HttpMethod = "POST",
-            InsertionMode = InsertionMode.Replace,
-            UpdateTargetId = "dane"
+        <h2>Inscription aux cours et ajout des résultats</h2>
+        <hr />
 
-        }))
-        {
+        <p>Dans cette page vous pourrez remplir les cours que vous avez <b>cette</b> année ainsi que les résultats s'y rapportant.</p>
+        <p>C'est parmi cette sélection de cours que vous pourrez choisir le tutorat que vous avez besoin.</p>
+
+    using (Ajax.BeginForm("Cours", "Eperso", new AjaxOptions()
+    {
+        //HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "dane"
+
+    }))
+    {
             <div class="dropdown ">
                 <div class="form-group">
-                    @Html.DropDownList("DDCours")
-                    @Html.TextBox("coteCours", "", new { @type = "number", @min = "0", @max = "20", @required = "required" })
-                    <span style="cursor:pointer; color:green;" onclick="addNew();">ADD</span>
-                    <span style="cursor:pointer; color:red;" class="delete" onclick="remove(this)">REMOVE</span>
-                </div>
+                    <div class="col-md-2 control-label">
+                        Choix du cours :  
+                    </div>
+                    <div class="dropdown-toggle col-md-5">
+                        @Html.DropDownList("DDCours")
+                    </div>
+                    <div class=" col-md-5">
+                        Cote :
+                        @Html.TextBox("coteCours", "", new { @type = "number", @min = "0", @max = "20", @required = "required" })
+
+                        <span style="cursor:pointer; color:green;" onclick="addNew();">ADD</span>
+                        <span style="cursor:pointer; color:red;" class="delete" onclick="remove(this)">REMOVE</span>
+                        </div>
+                    </div>
                 <div class="clear"></div>
             </div>
             <div class="clonecontainer"></div>

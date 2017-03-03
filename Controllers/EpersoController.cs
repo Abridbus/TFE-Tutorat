@@ -42,25 +42,8 @@ namespace Tutorat.Controllers
                 etudiant etuCo = db.etudiant.FirstOrDefault(u => u.mail.Contains(System.Web.HttpContext.Current.User.Identity.Name));
                 id = etuCo.etudiant_id;
             }
-            // http://stackoverflow.com/questions/42138725/sql-to-linq-for-many-to-many-relation-c-asp-net-mvc
-            /* Pas propre, TO DELETE
-            var courses = db.etudiant
-              .Include(e => e.cours)
-              .Single(e => e.etudiant_id == id) // will throw exception if entity not found
-              .cours.Select(c => c.libelle); // get all libelle's
-            ViewBag.ce2 = string.Join("; ", courses);
-            */
 
-            IEnumerable<SelectListItem> items = db.cours
-                    .Select(c => new SelectListItem
-                    {
-                        Value = c.cours_id.ToString(), // La valeur dans le dropdown sera l'id du cours (typecast forcé)
-                        Text = c.libelle // La valeur affichée dans le dropdown sera le libellé du cours
-
-                    });
-            ViewBag.DDCours = items;
-
-            //Working
+            //Working - Montre les informations de l'étudiant
             IEnumerable<cours> informations = db.etudiant
               .Include(e => e.cours)
               .Single(e => e.etudiant_id == id) // will throw exception if entity not found
@@ -73,11 +56,6 @@ namespace Tutorat.Controllers
             }
 
             return View();
-        }
-
-        public void addetuCours(etudiant etu, cours c)
-        {
-
         }
 
         [HttpPost]
@@ -126,12 +104,6 @@ namespace Tutorat.Controllers
             // Trouver un moyen de retirer les doublons et/ou modifier !
             // MArche MAIS !! Recréer des étudiants plutot que de mettre à jour les infos !!
         }
-
-
-            ViewBag.taille = DDCours.Length;
-            ViewBag.etudiant_id = 1;
-            ViewBag.cours_id = DDCours;
-            ViewBag.cote = coteCours;
 
             db.SaveChanges();
 

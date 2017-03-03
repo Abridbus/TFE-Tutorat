@@ -2,15 +2,9 @@
     ViewBag.Title = "Cours";
 }
 
-<h2>Inscription aux cours et ajout des résultats</h2>
-<hr />
 
-<p>Dans cette page vous pourrez remplir les cours que vous avez <b>cette</b> année ainsi que les résultats s'y rapportant.</p>
-<p>C'est parmi cette sélection de cours que vous pourrez choisir le tutorat que vous avez besoin.</p>
 
 <p style="color:red"> A vérifier : tutorat possible uniquement pour les cours de l'année en cours?</p>
-<h3> ViewBag list : </h3>
-
 
 <h3> ViewBag list : </h3> 
 <div class="row">
@@ -41,7 +35,6 @@
                                 <td>@person.libelle</td>
                                 <td>@person.section</td>
                                 <td>@person.annee</td>
-                                <td>@person.  </td>
                             </tr>
                         }
                     </tbody>
@@ -50,76 +43,3 @@
         </div>
     </div>
 </div>
-
-<hr />
-
-
-<h2>PartialCours</h2>
-
-
-<h4> Test dropdown </h4>
-
-<script>
-    var selectOpt = $('.dropdown');
-    function remove(element) {
-        var amountEntries = $('.dropdown').size() + $('.dropdownclone').size();
-        if (amountEntries <= 1) {
-            return;
-        }
-        if (amountEntries === 2) {
-            $('.deleteButton').hide();
-        }
-        $(element).closest(".dropdown, .dropdownclone").fadeOut('blind', function () {
-            if ($(this).is(".dropdown")) {
-                $(".dropdownclone:first").toggleClass("dropdown dropdownclone");
-            }
-            $(this).remove();
-        });
-    }
-    function addNew() {
-        var dropdownclone, inputCote, amountEntries = $('.dropdown').size() + $('.dropdownclone').size();
-
-
-        dropdownclone = $('.dropdown').clone();
-
-        //test
-        var dropdown = $('.dropdown');
-        var $dropdownSelects = dropdown.find('select');
-
-        //Forcer le reset sur le clone de l'input
-        var $inputCote = dropdownclone.find('input').val("");
-        dropdownclone.attr("class", 'dropdownclone');
-        dropdownclone.hide().appendTo(".clonecontainer").fadeIn(1000);
-    }
-
-    // Quand on appuye sur le bouton, lancer la fonction ci dessous
-
-</script>
-
-
-
-@using (Ajax.BeginForm("Cours", "Eperso", new AjaxOptions()
-{
-    //HttpMethod = "POST",
-    InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "dane"
-
-}))
-{
-        <div class="dropdown ">
-            <div class="form-group">
-                @Html.DropDownList("DDCours")
-                @Html.TextBox("coteCours", "", new { @type = "number", @min = "0", @max = "20", @required = "required"})
-                <span style="cursor:pointer; color:green;" onclick="addNew();">ADD</span>
-                <span style="cursor:pointer; color:red;" class="delete" onclick="remove(this)">REMOVE</span>
-            </div>
-            <div class="clear"></div>
-        </div>
-        <div class="clonecontainer"></div>
-        <p> Je certifie que mes informations sont correctes : </p>
-        <input type="submit" value="Soumettre"/>
-
-<div id="dane">
-    <p>Content</p>
-</div>
-}

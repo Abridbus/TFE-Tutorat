@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Tutorat.Models;
+using System.Collections.Generic;
 
 namespace Tutorat.Controllers
 {
@@ -142,11 +143,27 @@ namespace Tutorat.Controllers
             }
         }
 
+        [AllowAnonymous]
+        public IEnumerable<SelectListItem> CompleteCours()
+        {
+            IEnumerable<SelectListItem> items;
+            var context = new Ephec();
+            
+            items = context.cours
+                .Select(c => new SelectListItem
+                {
+                    Value = c.cours_id.ToString(), // La valeur dans le dropdown sera l'id du cours (typecast forcé)
+                    Text = c.libelle // La valeur affichée dans le dropdown sera le libellé du cours
+                });
+            
+            return items;
+        }
         //
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.DDCours = CompleteCours();
             return View();
         }
 
@@ -157,6 +174,8 @@ namespace Tutorat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            ViewBag.DDCours = CompleteCours();
+
             if (ModelState.IsValid)
             {
                 //ToLower() pour ajouter les mails à la db en minuscule
@@ -175,27 +194,51 @@ namespace Tutorat.Controllers
 
                     //Ajouter les infos dans la table etudiant ici.
                     //Le code a été placé ici parce que la table enfant doit être rempli APRES la table parent (FK contrainte)
-                    var etu = new etudiant()
-                    {
-                        matricule = model.Matricule,
-                        nom = model.Nom,
-                        prenom = model.Prenom,
-                        section = model.Section,
-                        groupe = model.Groupe,
-                        annee = model.Annee,
-                        mail = model.Email.ToLower()
-                    };
-                    using (var context = new Ephec())
-                    {
+                    using (var context = new Ephec()) { 
+                        var etu = new etudiant()
+                        {
+                            matricule = model.Matricule,
+                            nom = model.Nom,
+                            prenom = model.Prenom,
+                            section = model.Section,
+                            groupe = model.Groupe,
+                            annee = model.Annee,
+                            mail = model.Email.ToLower(),
+                        };
+
+                        string[] DDCours = Request.Form.GetValues("DDCours");
+                        string[] coteCours = Request.Form.GetValues("coteCours");
+
+                        List<cours> listc = new List<cours> { };
+                        for (int i = 0; i < DDCours.Length; i++)
+                        {
+
+                            DDCours = DDCours.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+                            coteCours = coteCours.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+                            etuResult etuRes = new etuResult();
+                            etuRes.etudiant_id = model.;
+                            etuRes.cours_id = int.Parse(DDCours[i]);
+                            etuRes.cote = int.Parse(coteCours[i]);
+                            db.etuResult.Add(etuRes);
+
+                            cours c = db.cours.FirstOrDefault(u => u.cours_id == etuRes.cours_id);
+                            listc.Add(c);
+
+                            etudiant etu = db.etudiant.FirstOrDefault(e => e.etudiant_id == id);
+                            etu.cours = listc;
+                        
+                        {
 
                         context.etudiant.Add(etu);
                         context.SaveChanges();
-                    };
+                    }
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
+            
             // If we got this far, something failed, redisplay form
             return View(model);
         }

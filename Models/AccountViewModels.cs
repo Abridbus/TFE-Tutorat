@@ -127,8 +127,8 @@ namespace Tutorat.Models
         /** Ajouter les cours !! PAS ICI !! Après s'être enregistré dans l'onglet EPERSO !! **/
 
         // Cet ensemble de cours ne sera qu'une liste de int (les ID des cours)
-        [Required]
-        public IEnumerable<cours> EnsembleCours { get; set; }
+        //[Required]
+        //public IEnumerable<cours> EnsembleCours { get; set; }
     }
 
     public class ResetPasswordViewModel
