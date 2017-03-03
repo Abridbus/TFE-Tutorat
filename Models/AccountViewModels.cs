@@ -69,30 +69,30 @@ namespace Tutorat.Models
         [StringLength(50)]
         [Required]
         [Display(Name = "Prénom")]
-        public string prenom { get; set; }
+        public string Prenom { get; set; }
 
         [StringLength(50)]
         [Required]
         [Display(Name = "Nom")]
-        public string nom { get; set; }
+        public string Nom { get; set; }
 
         [StringLength(8)]
         [Required]
         [Display(Name = "Matricule")]
-        public string matricule { get; set; }
+        public string Matricule { get; set; }
 
         [Required]
         [Display(Name = "Section")]
-        public string section { get; set; }
+        public string Section { get; set; }
 
         [Display(Name = "Année actuelle")]
         [Required]
-        public int annee { get; set; }
+        public int Annee { get; set; }
 
         [StringLength(4)]
         [Required]
         [Display(Name = "Groupe")]
-        public string groupe { get; set; }
+        public string Groupe { get; set; }
 
         [Required]
         [EmailAddress]
@@ -116,15 +116,19 @@ namespace Tutorat.Models
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Mot de passe")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Mot de passe confirmé ")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
         
         /** Ajouter les cours !! PAS ICI !! Après s'être enregistré dans l'onglet EPERSO !! **/
+
+        // Cet ensemble de cours ne sera qu'une liste de int (les ID des cours)
+        [Required]
+        public IEnumerable<cours> EnsembleCours { get; set; }
     }
 
     public class ResetPasswordViewModel

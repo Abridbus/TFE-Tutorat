@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript" src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-1.10.2.min.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -28,22 +29,29 @@
                     <!-- Afficher uniquement si l'utilisateur est connecté -->
                     @if (Context.User.Identity.IsAuthenticated)
                     {
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Eperso<b class="caret"></b></a>
+                        <li>
+                            <a href="#" data-toggle="dropdown">Eperso<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Mes infos", "Info", "Eperso")</li>
                                 <li>@Html.ActionLink("Mes Cours", "Cours", "Eperso")</li>
                             </ul>
                         </li>
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorat<b class="caret"></b></a>
+                        <li>
+                            <a href="#" data-toggle="dropdown">Tutorat<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Demande", "Demande", "Tutorat")</li>
                                 <li>@Html.ActionLink("Explanation", "Explanation", "Tutorat")</li>
                                 <li>@Html.ActionLink("Offre", "Offre", "Tutorat")</li>
                                 <li>@Html.ActionLink("Reglement", "Reglement", "Tutorat")</li>
                                 <li>@Html.ActionLink("Test", "Test", "Tutorat")</li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="#" data-toggle="dropdown">Test<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Mes Cours TEST", "Cours", "Test")</li>
                             </ul>
                         </li>
                     }

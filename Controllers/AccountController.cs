@@ -174,15 +174,15 @@ namespace Tutorat.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     //Ajouter les infos dans la table etudiant ici.
-                    // LE code a été replacé ici parce que la table enfant doit être rempli APRES la table parent (FK contrainte)
+                    //Le code a été placé ici parce que la table enfant doit être rempli APRES la table parent (FK contrainte)
                     var etu = new etudiant()
                     {
-                        matricule = model.matricule,
-                        nom = model.nom,
-                        prenom = model.prenom,
-                        section = model.section,
-                        groupe = model.groupe,
-                        annee = model.annee,
+                        matricule = model.Matricule,
+                        nom = model.Nom,
+                        prenom = model.Prenom,
+                        section = model.Section,
+                        groupe = model.Groupe,
+                        annee = model.Annee,
                         mail = model.Email.ToLower()
                     };
                     using (var context = new Ephec())
@@ -420,6 +420,8 @@ namespace Tutorat.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Abandon();
+            Session.RemoveAll();
             return RedirectToAction("Index", "Home");
         }
 

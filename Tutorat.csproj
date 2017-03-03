@@ -189,6 +189,7 @@
     <Compile Include="Controllers\etudiantsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TutoratController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -309,9 +310,12 @@
     <Content Include="Views\Eperso\Index.cshtml" />
     <Content Include="Views\Eperso\Info.cshtml" />
     <Content Include="Views\Eperso\Cours.cshtml" />
+    <Content Include="Views\Eperso\_PartialView.cshtml" />
+    <Content Include="Views\Test\cours.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DAL\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
