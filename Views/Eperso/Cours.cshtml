@@ -1,66 +1,23 @@
-﻿@model Tutorat.Models.etudiant
-
-@{
+﻿@{
     ViewBag.Title = "Cours";
 }
 
 <h2>Inscription aux cours et ajout des résultats</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>etudiant</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-        <<!-- -->
-        <div class="form-group">
-            @Html.LabelFor(model => model.mail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-<div>
-    string : @ViewBag.ce2
-</div>
-<div>
-    list string : 
-    @foreach (var person in ViewBag.list)
-    {
-        <span>@person</span>
-    }
-</div>
-
-<div>
-    etu1 string :
-    @foreach (var person in ViewBag.etu1)
-    {
-        <span>@person</span> <hr /> 
-    }
-</div>
-
 <hr />
 
+<p>Dans cette page vous pourrez remplir les cours que vous avez <b>cette</b> année ainsi que les résultats s'y rapportant.</p>
+<p>C'est parmi cette sélection de cours que vous pourrez choisir le tutorat que vous avez besoin.</p>
+
+<p style="color:red"> A vérifier : tutorat possible uniquement pour les cours de l'année en cours?</p>
+<h3> ViewBag list : </h3>
+
+
+<h3> ViewBag list : </h3> 
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary list-panel" id="list-panel">
             <div class="panel-heading list-panel-heading">
-                <h1 class="panel-title list-panel-title">Assets</h1>
+                <h1 class="panel-title list-panel-title">Cours</h1>
             </div>
             <div class="panel-body">
                 <table id="assets-data-table"
@@ -84,6 +41,7 @@
                                 <td>@person.libelle</td>
                                 <td>@person.section</td>
                                 <td>@person.annee</td>
+                                <td>@person.  </td>
                             </tr>
                         }
                     </tbody>
@@ -92,3 +50,76 @@
         </div>
     </div>
 </div>
+
+<hr />
+
+
+<h2>PartialCours</h2>
+
+
+<h4> Test dropdown </h4>
+
+<script>
+    var selectOpt = $('.dropdown');
+    function remove(element) {
+        var amountEntries = $('.dropdown').size() + $('.dropdownclone').size();
+        if (amountEntries <= 1) {
+            return;
+        }
+        if (amountEntries === 2) {
+            $('.deleteButton').hide();
+        }
+        $(element).closest(".dropdown, .dropdownclone").fadeOut('blind', function () {
+            if ($(this).is(".dropdown")) {
+                $(".dropdownclone:first").toggleClass("dropdown dropdownclone");
+            }
+            $(this).remove();
+        });
+    }
+    function addNew() {
+        var dropdownclone, inputCote, amountEntries = $('.dropdown').size() + $('.dropdownclone').size();
+
+
+        dropdownclone = $('.dropdown').clone();
+
+        //test
+        var dropdown = $('.dropdown');
+        var $dropdownSelects = dropdown.find('select');
+
+        //Forcer le reset sur le clone de l'input
+        var $inputCote = dropdownclone.find('input').val("");
+        dropdownclone.attr("class", 'dropdownclone');
+        dropdownclone.hide().appendTo(".clonecontainer").fadeIn(1000);
+    }
+
+    // Quand on appuye sur le bouton, lancer la fonction ci dessous
+
+</script>
+
+
+
+@using (Ajax.BeginForm("Cours", "Eperso", new AjaxOptions()
+{
+    //HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "dane"
+
+}))
+{
+        <div class="dropdown ">
+            <div class="form-group">
+                @Html.DropDownList("DDCours")
+                @Html.TextBox("coteCours", "", new { @type = "number", @min = "0", @max = "20", @required = "required"})
+                <span style="cursor:pointer; color:green;" onclick="addNew();">ADD</span>
+                <span style="cursor:pointer; color:red;" class="delete" onclick="remove(this)">REMOVE</span>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="clonecontainer"></div>
+        <p> Je certifie que mes informations sont correctes : </p>
+        <input type="submit" value="Soumettre"/>
+
+<div id="dane">
+    <p>Content</p>
+</div>
+}

@@ -8,103 +8,103 @@
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4>Création de compte :</h4>
     <hr />
-    //@Html.ValidationSummary("", new { @class = "text-danger" })
-
-    <!-- ADDED FOR FIRSTNAME/PRENOM -->
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    
+        <!-- AJOUT POUR PRENOM -->
         <div class="form-group">
-            @Html.LabelFor(m => m.prenom, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.Prenom, new { @class = "col-md-2 control-label" })
             <div class="col-md-6">
-                @Html.TextBoxFor(m => m.prenom, new { @class = "form-control" })
-                <p style="color:red"> @Html.ValidationMessageFor(m => m.prenom)</p>
+                @Html.TextBoxFor(m => m.Prenom, new { @class = "form-control" })
+                <p style="color:red"> @Html.ValidationMessageFor(m => m.Prenom)</p>
             </div>
         </div>
-        <!-- ADDED FOR NAME -->
+        <!-- AJOUT POUR NAME -->
         <div class="form-group">
-            @Html.LabelFor(m => m.nom, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.Nom, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.nom, new { @class = "form-control" })
-                <p style="color:red"> @Html.ValidationMessageFor(m => m.nom)</p>
+                @Html.TextBoxFor(m => m.Nom, new { @class = "form-control" })
+                <p style="color:red"> @Html.ValidationMessageFor(m => m.Nom)</p>
             </div>
         </div>
 
-        <!-- ADDED FOR MATRIcULE -->
+        <!-- AJOUT POUR MATRICULE -->
         <div class="form-group">
-            @Html.LabelFor(m => m.matricule, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.Matricule, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(m => m.matricule, new { @class = "form-control" })
-                <p style="color:red"> @Html.ValidationMessageFor(m => m.matricule)</p>
+                @Html.TextBoxFor(m => m.Matricule, new { @class = "form-control" })
+                <p style="color:red"> @Html.ValidationMessageFor(m => m.Matricule)</p>
             </div>
         </div>
         
-        <!-- ADDED DROPDOWN FOR ANNEE ACTUELLE -->
+        <!--AJOUT POUR ANNEE ACTUELLE -->
         <div class="form-group">
-            @Html.LabelFor(m => m.annee, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(m => m.Annee, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 <div class="btn-group" data-toggle="buttons">
                     <label class="btn btn-primary">
-                        @Html.RadioButtonFor(m => m.annee, 1, new { @class = "form-control" }) 1
+                        @Html.RadioButtonFor(m => m.Annee, 1, new { @class = "form-control" }) 1
                     </label>
                     <label class="btn btn-primary">
-                        @Html.RadioButtonFor(m => m.annee, 2, new { @class = "form-control" }) 2
+                        @Html.RadioButtonFor(m => m.Annee, 2, new { @class = "form-control" }) 2
                     </label>
                     <label class="btn btn-primary">
-                        @Html.RadioButtonFor(m => m.annee, 3, new { @class = "form-control" }) 3
+                        @Html.RadioButtonFor(m => m.Annee, 3, new { @class = "form-control" }) 3
                     </label>
                 </div>
-                <p style="color:red"> @Html.ValidationMessageFor(m => m.annee)</p>
+                <p style="color:red"> @Html.ValidationMessageFor(m => m.Annee)</p>
             </div>
         </div>
 
-        <!-- ADDED BUTTON GROUP FOR SECTION (LLN & Woluwe Only)  -->
+        <!-- AJOUT POUR  SECTION (LLN & Woluwe Only)  -->
     <div class="form-group">
-        @Html.LabelFor(m => m.section, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Section, new { @class = "col-md-2 control-label" })
         <div class="col-md-10 btn-group" data-toggle="buttons">
             <label class="btn btn-primary">
-                @Html.RadioButtonFor(m => m.section, "DR", new { @class = "form-control" }) Droit
+                @Html.RadioButtonFor(m => m.Section, "DR", new { @class = "form-control" }) Droit
             </label>
             <label class="btn btn-primary">
-                @Html.RadioButtonFor(m => m.section, "CO", new { @class = "form-control" }) Comptabilité
+                @Html.RadioButtonFor(m => m.Section, "CO", new { @class = "form-control" }) Comptabilité
             </label>
             <label class="btn btn-primary">
-                @Html.RadioButtonFor(m => m.section, "MA", new { @class = "form-control" }) Marketing
+                @Html.RadioButtonFor(m => m.Section, "MA", new { @class = "form-control" }) Marketing
             </label>
             <label class="btn btn-primary">
-                @Html.RadioButtonFor(m => m.section, "CE", new { @class = "form-control" }) Commerce Extérieur
+                @Html.RadioButtonFor(m => m.Section, "CE", new { @class = "form-control" }) Commerce Extérieur
             </label>
             <label class="btn btn-primary">
-                @Html.RadioButtonFor(m => m.section, "TI", new { @class = "form-control" }) Technologie de l'informatique
+                @Html.RadioButtonFor(m => m.Section, "TI", new { @class = "form-control" }) Technologie de l'informatique
             </label>
             <label class="btn btn-primary">
-                @Html.RadioButtonFor(m => m.section, "EB", new { @class = "form-control" }) E-Business
+                @Html.RadioButtonFor(m => m.Section, "EB", new { @class = "form-control" }) E-Business
             </label>
+            <p style="color:red"> @Html.ValidationMessageFor(m => m.Section)</p>
         </div>
-        <p style="color:red"> @Html.ValidationMessageFor(m => m.section)</p>
     </div>
 
-        <!-- ADDED FOR GROUPE -->
+        <!-- AJOUT POUR GROUPE -->
     <div class="form-group">
-        @Html.LabelFor(m => m.groupe, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.Groupe, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             <div class="btn-group" data-toggle="buttons">
                 <label class="btn btn-primary">
-                    @Html.RadioButtonFor(m => m.groupe, 'A', new { @class = "form-control" }) A
+                    @Html.RadioButtonFor(m => m.Groupe, 'A', new { @class = "form-control" }) A
                 </label>
                 <label class="btn btn-primary">
-                    @Html.RadioButtonFor(m => m.groupe, 'B', new { @class = "form-control" }) B
+                    @Html.RadioButtonFor(m => m.Groupe, 'B', new { @class = "form-control" }) B
                 </label>
                 <label class="btn btn-primary">
-                    @Html.RadioButtonFor(m => m.groupe, 'C', new { @class = "form-control" }) C
+                    @Html.RadioButtonFor(m => m.Groupe, 'C', new { @class = "form-control" }) C
                 </label>
                 <label class="btn btn-primary">
-                    @Html.RadioButtonFor(m => m.groupe, 'D', new { @class = "form-control" }) D
+                    @Html.RadioButtonFor(m => m.Groupe, 'D', new { @class = "form-control" }) D
                 </label>
                 <label class="btn btn-primary">
-                    @Html.RadioButtonFor(m => m.groupe, 'E', new { @class = "form-control" }) E
+                    @Html.RadioButtonFor(m => m.Groupe, 'E', new { @class = "form-control" }) E
                 </label>
             </div>
-            <p style="color:red"> @Html.ValidationMessageFor(m => m.groupe)</p>
+            <p style="color:red"> @Html.ValidationMessageFor(m => m.Groupe)</p>
         </div>
     </div>
 
@@ -120,37 +120,55 @@
             @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                <p style="color:red"> @Html.ValidationMessageFor(m => m.Password)</p>
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                <p style="color:red"> @Html.ValidationMessageFor(m => m.ConfirmPassword)</p>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-default" value="Register" />
+        
+        <!-- AJOUT POUR LES COURS -->
+        <hr />
+        <h4> Choix des cours : </h4>
+        
+        @using (Ajax.BeginForm("Cours", "Eperso", new AjaxOptions()
+        {
+            //HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "dane"
+
+        }))
+        {
+            <div class="dropdown ">
+                <div class="form-group">
+                    @Html.DropDownList("DDCours")
+                    @Html.TextBox("coteCours", "", new { @type = "number", @min = "0", @max = "20", @required = "required" })
+                    <span style="cursor:pointer; color:green;" onclick="addNew();">ADD</span>
+                    <span style="cursor:pointer; color:red;" class="delete" onclick="remove(this)">REMOVE</span>
+                </div>
+                <div class="clear"></div>
             </div>
-        </div>
+            <div class="clonecontainer"></div>
+            <p> Je certifie que mes informations sont correctes : </p>
+            <input type="submit" value="Soumettre" />
+
+            <div id="dane">
+                <p>Content</p>
+            </div>
+        }
 
 
-}
-<!-- TEST PART
 
-<h4> TEST PART : </h4>
+            <!-- SUBMIT BUTTON -->
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Register" />
+                </div>
+            </div>
 
 
-<div class="dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-        Dropdown Example
-        <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu">
-        <li><a href="#">HTML</a></li>
-        <li><a href="#">CSS</a></li>
-        <li><a href="#">JavaScript</a></li>
-    </ul>
-</div>
-
-    -->
+            }

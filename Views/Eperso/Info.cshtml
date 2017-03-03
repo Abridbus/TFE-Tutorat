@@ -6,23 +6,16 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<p> Cette page fourni les informations avec lesquelles l'étudiant c'est inscrit. La page sera utilisée en cas de test grandeur réel.</p>
+<p> Cette page fournie les informations avec lesquelles l'étudiant c'est inscrit. La page sera utilisée en cas de test grandeur réel.</p>
 
 <div>
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.etudiant_id)
-        </dt>
-
-        <dd>
-            @ViewBag.sec.etudiant_id
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.matricule)
         </dt>
 
         <dd>
-            @ViewBag.sec.matricule
+            @Html.DisplayFor(model => model.matricule)
         </dd>
 
         <dt>
@@ -30,7 +23,7 @@
         </dt>
 
         <dd>
-            @ViewBag.sec.prenom
+            @Html.DisplayFor(model => model.prenom)
         </dd>
 
         <dt>
@@ -38,7 +31,7 @@
         </dt>
 
         <dd>
-            @ViewBag.sec.nom
+            @Html.DisplayFor(model => model.nom)
         </dd>
 
         <dt>
@@ -46,7 +39,7 @@
         </dt>
 
         <dd>
-            @ViewBag.sec.section
+            @Html.DisplayFor(model => model.section)
         </dd>
 
         <dt>
@@ -54,7 +47,7 @@
         </dt>
 
         <dd>
-            @ViewBag.sec.annee
+            @Html.DisplayFor(model => model.annee)
         </dd>
 
         <dt>
@@ -62,7 +55,7 @@
         </dt>
 
         <dd>
-            @ViewBag.sec.groupe
+            @Html.DisplayFor(model => model.groupe)
         </dd>
 
         <dt>
@@ -70,8 +63,20 @@
         </dt>
 
         <dd>
-            @ViewBag.sec.mail
+            @Html.DisplayFor(model => model.mail)
         </dd>
 
     </dl>
+</div>
+<!-- TO DELETE -->
+<hr />
+<div>
+    <h2> TO DELETE : </h2>
+    <p> Values of var[session]</p>
+    @foreach (string i in Session.Contents)
+    {
+        <p>
+            La variable " @i a pour valeur @Session[i].ToString();
+        </p>
+    }
 </div>
