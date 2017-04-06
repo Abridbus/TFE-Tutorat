@@ -41,10 +41,11 @@
                         <li>
                             <a href="#" data-toggle="dropdown">Tutorat<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Demande", "Demande", "Tutorat")</li>
                                 <li>@Html.ActionLink("Explanation", "Explanation", "Tutorat")</li>
+                                <li>@Html.ActionLink("Demande", "Demande", "Tutorat")</li>
                                 <li>@Html.ActionLink("Offre", "Offre", "Tutorat")</li>
                                 <li>@Html.ActionLink("Reglement", "Reglement", "Tutorat")</li>
+                                <li>@Html.ActionLink("Mes Tutorats", "MesTutorats", "Tutorat")</li>
                                 <li>@Html.ActionLink("Test", "Test", "Tutorat")</li>
                             </ul>
                         </li>
@@ -55,7 +56,19 @@
                                 <li>@Html.ActionLink("Mes Cours TEST", "Cours", "Test")</li>
                             </ul>
                         </li>
+                        if (Context.User.IsInRole("ConseilSocial"))
+                        {
+                            <li>
+                                <a href="#" data-toggle="dropdown">Tutorats étudiants<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Explanation", "Explanation", "Tutorat")</li>
+                                    <li>@Html.ActionLink("DemandesTutorat", "DemandesTutorat", "GestionTutorat")</li>
+
+                                </ul>
+                            </li>
+                        }
                     }
+                   
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

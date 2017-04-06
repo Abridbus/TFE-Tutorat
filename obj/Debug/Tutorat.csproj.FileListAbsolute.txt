@@ -1,3 +1,4 @@
+D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\EntityFramework.SqlServer.dll
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\roslyn\csc.exe
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -15,7 +16,6 @@ D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\Tutorat.dll
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\Tutorat.pdb
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\Antlr3.Runtime.dll
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\EntityFramework.dll
-D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\EntityFramework.SqlServer.dll
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\Microsoft.AspNet.Identity.Core.dll
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\Microsoft.AspNet.Identity.Owin.dll

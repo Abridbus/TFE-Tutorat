@@ -185,8 +185,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\coursController.cs" />
+    <Compile Include="Controllers\DefautController.cs" />
     <Compile Include="Controllers\EpersoController.cs" />
     <Compile Include="Controllers\etudiantsController.cs" />
+    <Compile Include="Controllers\GestionTutoratController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TestController.cs" />
@@ -198,16 +200,21 @@
     <Compile Include="Models\cours.cs" />
     <Compile Include="Models\demandeur.cs" />
     <Compile Include="Models\demandeurCours.cs" />
+    <Compile Include="Models\demandeurCourstmp.cs" />
+    <Compile Include="Models\demandeurtmp.cs" />
     <Compile Include="Models\Ephec.cs" />
+    <Compile Include="Models\EphecTemp.cs" />
     <Compile Include="Models\etudiant.cs" />
     <Compile Include="Models\etuResult.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\prestation.cs" />
-    <Compile Include="Models\prestationTutorat.cs" />
+    <Compile Include="Models\prestationtmp.cs" />
     <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\tuteur.cs" />
     <Compile Include="Models\tuteurCours.cs" />
+    <Compile Include="Models\tuteurCourstmp.cs" />
+    <Compile Include="Models\tuteurtmp.cs" />
     <Compile Include="Models\tutorat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -313,10 +320,15 @@
     <Content Include="Views\Eperso\Cours.cshtml" />
     <Content Include="Views\Eperso\_PartialView.cshtml" />
     <Content Include="Views\Test\cours.cshtml" />
+    <Content Include="Views\Tutorat\MesTutorats.cshtml" />
+    <Content Include="Views\Eperso\CoursInscrits.cshtml" />
+    <Content Include="Views\GestionTutorat\DemandesTutorat.cshtml" />
+    <Content Include="Views\GestionTutorat\HistoriqueDemandes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="DAL\" />
+    <Folder Include="Views\Defaut\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

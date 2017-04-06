@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Tutorat.Models.gestionTutorat>
+@{
+    ViewBag.Title = "DemandesTutorat";
+}
+
+<h2>DemandesTutorat</h2>
+
+@{
+    
+}   
+
+        @using (Html.BeginForm())
+        {
+        <table>
+            <tr>
+                <th>
+                Type de recherche :  @Html.DropDownList("DDRecherche")
+                        Précision: @Html.DropDownList("valueDropDown")                    
+                <input type="submit" value="Search" />
+                </th>
+            </tr>
+        </table>
+        }
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary list-panel" id="list-panel">
+                    <div class="panel-heading list-panel-heading">
+                        <h1 class="panel-title list-panel-title">Demande de tutorat  :</h1>
+                    </div>
+
+                    <div class="panel-body">
+                        <table id="assets-data-table"
+                               class="table table-striped table-bordered"
+                               style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th> matricule</th>
+                                    <th> prénom </th>
+                                    <th> nom </th>
+                                    <th> cours_id </th>
+                                    <th> cours_libelle</th>
+                                    <th> commentaire </th>
+                                    <th> date_insc </th>
+                                    <th> matricule Tuteur Pref</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var person in Model)
+                                {
+                                    <tr>
+                                        <td>@person.matricule</td>
+                                        <td>@person.prenom</td>
+                                        <td>@person.nom</td>
+                                        <td>@person.cours_id</td>
+                                        <td>@person.cours_libelle</td>
+                                        <td>@person.commentaire</td>
+                                        <td>@person.dateInsc</td>
+                                        <td>@person.matriculeTuteurPref</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>

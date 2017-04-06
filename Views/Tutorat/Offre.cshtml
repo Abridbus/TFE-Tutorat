@@ -1,7 +1,66 @@
-﻿
+﻿@model Tutorat.Models.listeDemandeTmp
+
 @{
     ViewBag.Title = "Offre";
 }
 
-<h2>Offre</h2>
+<h2> Offre de Tutorat : </h2>
 
+<p> Sur cette page vous allez pouvoir remplir votre offre de tutorat pour l'année en cours. </p>
+<p> Les cours sont ceux que vous avez ajouté dans l'onglet Cours de Eperso. </p>
+
+<p> <b> Copier / Coller du formulaire : (Modification à venir)</b></p>
+
+<h3> Cap vers la réussite en 1ère bac à l’<b> EPHEC</b> </h3>
+
+<p>
+    Après la mise en relation avec ton étudiant, les coordonnées de celui-ci te seront envoyées sur ton adresse eperso.
+    <b style="text-decoration:underline">Vérifie régulièrement tes mails</b>
+</p>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                <h1 class="panel-title list-panel-title">Offre de tutorat pour les cours suivant (PP pas de S ?) :</h1>
+            </div>
+            <!-- BEGIN FORM : -->
+            @using (Ajax.BeginForm("Offre", "Tutorat",
+                new AjaxOptions { LoadingElementId = "loader", OnSuccess = "onSuccess", }))
+            {
+                <div class="panel-body">
+                    <table id="assets-data-table"
+                           class="table table-striped table-bordered"
+                           style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID - libelle du cours</th>
+                                <th>code</th>
+                                <th>annee</th>
+                                <th>résultat</th>
+                                <th>commentaire (facultatif)</th>
+                                <th>Proposition de tutorat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ int i = 0;}
+                            @foreach (var person in ViewBag.listCoursOffre)
+                            {
+                                <tr>
+                                    <td>@Html.HiddenFor(m => m.Items[i].cours_id, new { @Text = @person.libelle, @Value = @person.cours_id }) @person.cours_id - @person.libelle </td>
+                                    <td>@person.code</td>
+                                    <td>@person.annee</td>
+                                    <td>@person.cote</td>
+                                    <td>@Html.TextAreaFor(m => m.Items[i].commentaire, new { maxlength = "500", placeholder = "Max 500 caractères, soyez bref!", rows = "7", cols = "50" })</td>
+                                    <td>@Html.CheckBoxFor(m => m.Items[i].select)</td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <input type="submit" value="Soumettre" />
+                                }
+        </div>
+    </div>
+</div>

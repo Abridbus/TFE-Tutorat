@@ -14,6 +14,7 @@ function remove(element) {
         $(this).remove();
     });
 }
+
 function addNew() {
     var dropdownclone, inputCote, amountEntries = $('.dropdown').size() + $('.dropdownclone').size();
 

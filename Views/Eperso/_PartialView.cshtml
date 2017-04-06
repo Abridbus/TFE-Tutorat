@@ -1,24 +1,10 @@
 ﻿
 <div style="background-color:#ccc;border:1px solid red;padding:10px;">
     You have called a partial view.
-    <!--foreach (var person in ViewBag.etuC)
+    @foreach (var person in ViewBag.etuC)
     {
         <p>etudiant_id = person.etudiant_id</p>
         <p>Cours_id = person.cours_id</p>
         <p>Cote = person.cote</p>
-    }-->
-
-    @foreach (var person in ViewBag.cours_id)
-    {
-    <p> etuid = @ViewBag.etudiant_id </p>
-    <p> coursid = @ViewBag.cours_id </p>
-    <p> cote = @ViewBag.cote </p>
-    }
-
-    @for (int i = 0; i < ViewBag.taille; i++)
-    {
-        <p> etuid = @Html.Raw(ViewBag.etudiant_id) </p>
-        <p> coursid = @Html.Raw(ViewBag.cours_id[i]) </p>
-        <p> cote = @Html.Raw(ViewBag.cote[i]) </p>
     }
 </div>

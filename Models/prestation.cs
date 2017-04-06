@@ -1,4 +1,4 @@
-namespace Tutorat.Models
+﻿namespace Tutorat.Models
 {
     using System;
     using System.Collections.Generic;
@@ -9,15 +9,26 @@ namespace Tutorat.Models
     [Table("prestation")]
     public partial class prestation
     {
+        public prestation()
+        {
+            tutorat = new HashSet<tutorat>();
+        }
         [Key]
         public int prestation_id { get; set; }
 
         public int tuteur_id { get; set; }
 
-        public DateTime dateFeuille { get; set; }
+        public DateTime datePrestation { get; set; }
+
+        public int dureePrestation { get; set; }
+
+        [Required]
+        [StringLength(512)]
+        public string compteRendu { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tutorat> tutorat { get; set; }
 
         public virtual tuteur tuteur { get; set; }
-
-        public virtual prestationTutorat prestationTutorat { get; set; }
     }
 }

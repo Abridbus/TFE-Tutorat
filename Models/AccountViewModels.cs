@@ -123,14 +123,9 @@ namespace Tutorat.Models
         [Display(Name = "Mot de passe confirmé ")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-        
+
         /** Ajouter les cours !! PAS ICI !! Après s'être enregistré dans l'onglet EPERSO !! **/
-
-        // Cet ensemble de cours ne sera qu'une liste de int (les ID des cours)
-        //[Required]
-        //public IEnumerable<cours> EnsembleCours { get; set; }
     }
-
     public class ResetPasswordViewModel
     {
         [Required]

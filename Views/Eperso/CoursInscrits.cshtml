@@ -1,0 +1,103 @@
+﻿@model Tutorat.Models.listCoursResult
+@{
+    ViewBag.Title = "Mes Cours";
+}
+
+<h3> Mes Cours</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                <h1 class="panel-title list-panel-title">Cours</h1>
+            </div>
+            <div class="panel-body">
+                <table id="assets-data-table"
+                       class="table table-striped table-bordered"
+                       style="width:100%">
+                    <thead>
+                        <tr>
+                            <!-- <th>cours_id</th> -->
+                            <th>libelle</th>
+                            <th>code</th>
+                            <th>annee</th>
+                            <th>cote</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                        <tr>
+                            <td>@item.libelle </td>
+                            <td>@item.code </td>
+                            <td>@item.annee </td>
+                            <td>
+                                @if (@item.cote == null)
+                                {
+                                    @Html.Display("");
+                                }
+                                else
+                                {
+                                    @item.cote
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Si l'etudiant a pas de cours : afficher les cours et les résultats -->
+<h3> Mes résultats : </h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                <h1 class="panel-title list-panel-title">Cours</h1>
+            </div>
+            <div class="panel-body">
+                <table id="assets-data-table"
+                       class="table table-striped table-bordered"
+                       style="width:100%">
+                    <thead>
+                        <tr>
+                            <!-- <th>cours_id</th> -->
+                            <th>ID - libelle</th>
+                            <th>code</th>
+                            <th>annee</th>
+                            <th>cote</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{var i = 0;}
+                        @foreach (var item in ViewBag.etuR)
+                        {
+                            <tr>
+                                <td>@item.cours_id - @item.libelle </td>
+                                <td>@item.code </td>
+                                <td>@item.annee </td>
+                                <td>
+                                    @if (@item.cote == null)
+                                {
+                                    @Html.Display("");
+                                }
+                                else
+                                {
+                                    @item.cote
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

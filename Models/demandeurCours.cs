@@ -6,6 +6,7 @@ namespace Tutorat.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    [Table("demandeurCours")]
     public partial class demandeurCours
     {
         [Key]
@@ -22,6 +23,9 @@ namespace Tutorat.Models
 
         [StringLength(512)]
         public string commentaire { get; set; }
+
+        [StringLength(8)]
+        public string matriculeTuteurPref { get; set; }
 
         public virtual cours cours { get; set; }
 

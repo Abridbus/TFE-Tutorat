@@ -18,7 +18,6 @@ namespace Tutorat.Models
         public virtual DbSet<etudiant> etudiant { get; set; }
         public virtual DbSet<etuResult> etuResult { get; set; }
         public virtual DbSet<prestation> prestation { get; set; }
-        public virtual DbSet<prestationTutorat> prestationTutorat { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<tuteur> tuteur { get; set; }
         public virtual DbSet<tuteurCours> tuteurCours { get; set; }
@@ -106,9 +105,11 @@ namespace Tutorat.Models
                 .WithRequired(e => e.etudiant)
                 .WillCascadeOnDelete(false);
 
+            //Many to Many avec middle table prestationTutorat, n'existant pas sous Entity Framework
             modelBuilder.Entity<prestation>()
-                .HasOptional(e => e.prestationTutorat)
-                .WithRequired(e => e.prestation);
+                .HasMany(e => e.tutorat)
+                .WithMany(e => e.prestation)
+                .Map(m => m.ToTable("prestationTutorat").MapLeftKey("prestation_id").MapRightKey("tutorat_id"));
 
             modelBuilder.Entity<tuteur>()
                 .Property(e => e.matricule)
@@ -139,9 +140,9 @@ namespace Tutorat.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<tutorat>()
-                .HasMany(e => e.prestationTutorat)
-                .WithRequired(e => e.tutorat)
-                .WillCascadeOnDelete(false);
+                .HasMany(e => e.prestation)
+                .WithMany(e => e.tutorat)
+                .Map(m => m.ToTable("prestationTutorat").MapLeftKey("tutorat_id").MapRightKey("prestation_id"));
 
             modelBuilder.Entity<tutorat>()
                 .HasMany(e => e.tuteurCours)
