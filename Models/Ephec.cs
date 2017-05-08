@@ -149,5 +149,7 @@ namespace Tutorat.Models
                 .WithRequired(e => e.tutorat)
                 .WillCascadeOnDelete(false);
         }
+
+        public System.Data.Entity.DbSet<Tutorat.Models.gestionTutorat> gestionTutorats { get; set; }
     }
 }

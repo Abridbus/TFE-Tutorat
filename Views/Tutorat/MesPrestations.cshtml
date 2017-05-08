@@ -1,0 +1,44 @@
+﻿@model Tutorat.Models.prestationtmp
+
+@{
+    ViewBag.Title = "Mes Prestations";
+}
+@section JavaScript
+{
+    <script type="text/javascript" src="@Url.Content("/Scripts/registerScripts.js")"></script>
+}
+
+<h2>Mes Prestations</h2>
+
+<p> Ajouts des prestations étudiants </p>
+
+@using (Ajax.BeginForm("MesPrestations", "Tutorat", new AjaxOptions()
+{
+    //HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "dane"
+}))
+{
+
+
+    <div class="dropdown ">
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                Choix du cours :
+            </div>
+            <div class="dropdown-toggle col-md-5">
+            </div>
+            <div class="col-md-5">
+                Compte rendu :
+                @Html.TextBoxFor(model => model.compteRendu)
+
+                <span style="cursor:pointer; color:green;" onclick="addNew();">ADD</span>
+                <span style="cursor:pointer; color:red;" class="delete" onclick="remove(this)">REMOVE</span>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clonecontainer"></div>
+    <input type="submit" value="Soumettre" />
+}
+

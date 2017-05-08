@@ -41,28 +41,23 @@
                         <li>
                             <a href="#" data-toggle="dropdown">Tutorat<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Explanation", "Explanation", "Tutorat")</li>
+                                <li>@Html.ActionLink("Explication", "Explication", "Tutorat")</li>
                                 <li>@Html.ActionLink("Demande", "Demande", "Tutorat")</li>
                                 <li>@Html.ActionLink("Offre", "Offre", "Tutorat")</li>
-                                <li>@Html.ActionLink("Reglement", "Reglement", "Tutorat")</li>
-                                <li>@Html.ActionLink("Mes Tutorats", "MesTutorats", "Tutorat")</li>
-                                <li>@Html.ActionLink("Test", "Test", "Tutorat")</li>
+                                <li>@Html.ActionLink("Règlement", "Reglement", "Tutorat")</li>
+                                <li>@Html.ActionLink("Mes Prestations", "MesPrestations", "Tutorat")</li>
                             </ul>
                         </li>
 
-                        <li>
-                            <a href="#" data-toggle="dropdown">Test<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Mes Cours TEST", "Cours", "Test")</li>
-                            </ul>
-                        </li>
                         if (Context.User.IsInRole("ConseilSocial"))
                         {
                             <li>
                                 <a href="#" data-toggle="dropdown">Tutorats étudiants<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li>@Html.ActionLink("Explanation", "Explanation", "Tutorat")</li>
-                                    <li>@Html.ActionLink("DemandesTutorat", "DemandesTutorat", "GestionTutorat")</li>
+                                    <li>@Html.ActionLink("Explication", "Explication", "GestionTutorat")</li>
+                                    <li>@Html.ActionLink("Demandes Tutorat", "DemandesTutoratDeux", "GestionTutorat")</li>
+                                    <li>@Html.ActionLink("Tutorat en cours", "TutoratEnCours", "GestionTutorat")</li>
+                                    <li>@Html.ActionLink("Tutorat Fini", "TutoratFini", "GestionTutorat")</li>
 
                                 </ul>
                             </li>

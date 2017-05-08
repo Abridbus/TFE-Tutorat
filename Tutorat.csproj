@@ -301,10 +301,10 @@
     <Content Include="Views\Tutorat\Create.cshtml" />
     <Content Include="Views\Tutorat\Delete.cshtml" />
     <Content Include="Views\Tutorat\Details.cshtml" />
-    <Content Include="Views\Tutorat\Edit.cshtml" />
+    <Content Include="Views\GestionTutorat\Edit.cshtml" />
     <Content Include="Views\Tutorat\Index.cshtml" />
     <Content Include="Views\Tutorat\Demande.cshtml" />
-    <Content Include="Views\Tutorat\Explanation.cshtml" />
+    <Content Include="Views\Tutorat\Explication.cshtml" />
     <Content Include="Views\Tutorat\Offre.cshtml" />
     <Content Include="Views\Tutorat\Reglement.cshtml" />
     <Content Include="Views\Tutorat\Test.cshtml" />
@@ -320,10 +320,15 @@
     <Content Include="Views\Eperso\Cours.cshtml" />
     <Content Include="Views\Eperso\_PartialView.cshtml" />
     <Content Include="Views\Test\cours.cshtml" />
-    <Content Include="Views\Tutorat\MesTutorats.cshtml" />
+    <Content Include="Views\Tutorat\MesPrestations.cshtml" />
     <Content Include="Views\Eperso\CoursInscrits.cshtml" />
     <Content Include="Views\GestionTutorat\DemandesTutorat.cshtml" />
-    <Content Include="Views\GestionTutorat\HistoriqueDemandes.cshtml" />
+    <Content Include="Views\GestionTutorat\ListTuteurs.cshtml" />
+    <Content Include="Views\GestionTutorat\DemandesTutoratDeux.cshtml" />
+    <Content Include="Views\GestionTutorat\ListDemandeurs.cshtml" />
+    <Content Include="Views\GestionTutorat\TutoratEnCours.cshtml" />
+    <Content Include="Views\GestionTutorat\TutoratFini.cshtml" />
+    <Content Include="Views\GestionTutorat\Explication.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -334,7 +339,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>

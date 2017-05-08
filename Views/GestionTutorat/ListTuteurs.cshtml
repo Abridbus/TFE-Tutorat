@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Tutorat.Models.gestionTutorat>
+@{
+    ViewBag.Title = "ListTuteurs";
+}
+
+<h2>ListTuteurs</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("ID - Matricule")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.prenom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nom)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cours_id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cours_libelle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.commentaire)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateInsc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cote)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.etudiant_id) - @Html.DisplayFor(modelItem => item.matricule)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.prenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cours_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cours_libelle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.commentaire)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dateInsc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cote)
+            </td>
+        </tr>
+    }
+
+</table>

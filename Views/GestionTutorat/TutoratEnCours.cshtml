@@ -1,0 +1,67 @@
+﻿@model IEnumerable<Tutorat.Models.tutorat>
+
+@{
+    ViewBag.Title = "TutoratEnCours";
+}
+
+<h2>Tutorat en cours</h2>
+
+<p> La colonne demandeur comprend : le matricule, le nom et le prénom</p>
+<p> La colonne tuteur comprend : le matricule, le nom et le prénom</p>
+
+<p> Cette liste de tutorat reprend les tutorats n'ayant pas encore atteint un temps total de 600 min (10 heures) approuvé par Madame Alen.</p>
+<p> Une fois les 600minutes atteintes, le tutorat est terminé. Pour pouvoir ajouter du temps, il faut éditer le tutorat et entrer la valeur souhaitée dans la ligne "temps total"</p>
+
+<table class="table">
+    <tr>
+        <th>
+            Demandeur
+        </th>
+        <th>
+            Tuteur
+        </th>
+        <th>
+            Libellé du cours
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.commentaire)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateResign)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tempsTotal)
+        </th>
+        <th></th>
+    </tr>
+
+@{var i = 0;}
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @ViewBag.InfoSupp[i].matricule_demandeur - @ViewBag.InfoSupp[i].nom_demandeur @ViewBag.InfoSupp[i].prenom_demandeur
+        </td>
+        <td>
+            @ViewBag.InfoSupp[i].matricule_tuteur - @ViewBag.InfoSupp[i].nom_tuteur @ViewBag.InfoSupp[i].prenom_tuteur
+        </td>
+        <td>
+            @ViewBag.InfoSupp[i].cours_libelle
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.commentaire)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateResign)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tempsTotal)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.tutorat_id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.tutorat_id }) 
+        </td>
+    </tr>
+}
+
+</table>

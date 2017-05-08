@@ -12,6 +12,8 @@ namespace Tutorat.Models
         [Key]
         public int prestation_id { get; set; }
 
+        public int tutorat_id { get; set; }
+
         public int tuteur_id { get; set; }
 
         public DateTime datePrestation { get; set; }

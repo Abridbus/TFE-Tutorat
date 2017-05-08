@@ -1,4 +1,5 @@
 ﻿var selectOpt = $('.dropdown');
+
 function remove(element) {
     var amountEntries = $('.dropdown').size() + $('.dropdownclone').size();
     if (amountEntries <= 1) {

@@ -27,6 +27,15 @@ namespace Tutorat.Controllers
 
         }
 
+        public int[] getIdTuteur(int idEtudiant)
+        {
+            string matricule = (from e in db.etudiant where e.etudiant_id == idEtudiant select e.matricule).First().ToString();
+            int[] tuteur_id = (from t in db.tuteur where t.matricule == "HE111111" select t.tuteur_id).ToArray();
+
+            return tuteur_id;
+
+        }
+
         public void setSessionEtudiant(string mail)
         {
             etudiant etu = db.etudiant.FirstOrDefault(u => u.mail.Contains(mail));
@@ -49,12 +58,14 @@ namespace Tutorat.Controllers
             var bdd = new Ephec();
 
             items = bdd.cours
+                .Where(c => c.annee <= 1)
                 .Select(c => new SelectListItem
                 {
                     Value = c.cours_id.ToString(), // La valeur dans le dropdown sera l'id du cours (typecast forcé)
                     Text = c.libelle // La valeur affichée dans le dropdown sera le libellé du cours
                 });
 
+            
             return items;
         }
     }

@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "DemandesTutoratDeux";
+}
+
+<h2>DemandesTutoratDeux</h2>
+
+ @using (Html.BeginForm("DemandesTutoratDeux", "GestionTutorat"))
+ {
+    <div class="dropdown ">
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                Choix du cours :
+            </div>
+            <div class="dropdown-toggle col-md-5">
+                @Html.DropDownList("DDCours")
+            </div>
+      </div>
+        <input type="submit" value="Soumettre" />
+    </div>
+ }
+
+<div>
+    @Html.ActionLink("Liste de tuteurs", "ListTuteurs", "GestionTutorat")<br />
+    @Html.ActionLink("Liste de demandeurs", "ListDemandeurs", "GestionTutorat")
+</div>
+
+
