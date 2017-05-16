@@ -6,6 +6,18 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
+    //Modèle pour la gestion des Prestations (Conseil Social)
+    public class libPrestation{
+        public List<string> cours_libelles { get; set; }
+
+        public List<int> cours_ids { get; set; }
+
+        public int[] tuteur_ids { get; set; }
+
+        public List<int> dureeRestantes { get; set; }
+    }
+
+
     [Table("prestation")]
     public partial class prestation
     {

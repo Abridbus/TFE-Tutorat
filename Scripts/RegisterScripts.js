@@ -17,8 +17,7 @@ function remove(element) {
 }
 
 function addNew() {
-    var dropdownclone, inputCote, amountEntries = $('.dropdown').size() + $('.dropdownclone').size();
-
+    var dropdownclone, inputCote, amountEntries = $('.dropdown').size() + $('.dropdownclone' ).size();
 
     dropdownclone = $('.dropdown').clone();
 
@@ -31,3 +30,4 @@ function addNew() {
     dropdownclone.attr("class", 'dropdownclone');
     dropdownclone.hide().appendTo(".clonecontainer").fadeIn(1000);
 }
+

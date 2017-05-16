@@ -170,9 +170,7 @@ namespace Tutorat.Controllers
                     tctemp.commentaire = model.Items[i].commentaire;
                     enregTuteur(ttemp, tctemp);
                 }
-
             }
-
             return RedirectToAction("Index", "Home");
         }
 
@@ -190,17 +188,61 @@ namespace Tutorat.Controllers
             return View();
         }
 
+        public List<tutoratInfos> ViewBagPrestations()
+        {
+            int[] idTutorat = getIdTutorat(getMatricule());
+            List<tutoratInfos> tutInfo = new List<tutoratInfos>(idTutorat.Count());
+            for (int i = 0; i < idTutorat.Count(); i++)
+            {
+                int j = idTutorat[i];
+                int id = (from t in db.tutorat where t.tutorat_id == j select t.cours_id).First();
+                string lib = (from c in db.cours from t in db.tutorat where t.tutorat_id == j && t.cours_id == c.cours_id select c.libelle).FirstOrDefault();
+                int idTuteur = (from t in db.tutorat where t.tutorat_id == j select t.tuteur_id).First();
+                int dureeRestante = (from t in db.tutorat where t.tutorat_id == j select t.tempsTotal).First();
+                // En BDD est stocké le temps total RESTANT. On affiche le temps RESTANT !
+                if (dureeRestante != 0)
+                {
+                    tutInfo.Add(new tutoratInfos { tutorat_id = j, tuteur_id = idTuteur, dureeRestante = dureeRestante, cours_id = id, cours_libelle = lib });
+                }
+            };
+            return(tutInfo);
+        }
+
         public ActionResult MesPrestations()
         {
-            //Tableau de int car un étudiant peut avoir plusieurs tutorats.
-            int[] id = getIdTuteur(getIdEtudiant());
+            //Tableau de int car un étudiant peut avoir plusieurs tutorats
+
+            ViewBag.infos = ViewBagPrestations();
+            //Envoyer à la View une liste de model prestation
             return View();
         }
 
         [HttpPost]
-        public ActionResult MesPrestations(prestationtmp prtmp)
+        public ActionResult MesPrestations(listePrestationtmp prtmp)
         {
-            return View();
+            // Problème 1 : On ne peut pas required les champs (sinon on force les deux encodages) => L'utilisateur peut donc ne pas rentrer de données... PROBLEME !!
+            ViewBag.infos = ViewBagPrestations();
+
+            //Continue avec problème non résolu :(
+            foreach (var i in prtmp.Items)
+            {
+                //Retirer cette vérif si problème résolu :
+                if(i.compteRendu != null &&  i.dureePrestation != 0 && i.tuteur_id != 0 && i.tutorat_id != 0)
+                {
+                    int sum = (bddtemp.prestationtmp.Where(x => x.tuteur_id == i.tuteur_id && x.tutorat_id == i.tutorat_id && x.datePrestation == i.datePrestation)
+                        .Select(x => x.dureePrestation)
+                        .DefaultIfEmpty(0)
+                        .Sum()) + i.dureePrestation;
+                    bddtemp.prestationtmp.Add(i);
+                    if (sum < 121) {
+                      bddtemp.SaveChanges();
+                    }
+                    //Releasing "unmanaged" resources
+                    bddtemp.Dispose();
+                }
+
+            }
+            return RedirectToAction("Index", "Home");
         }
 
 

@@ -169,7 +169,6 @@ namespace Tutorat.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     //Ajouter les infos dans la table etudiant ici.
-                    //Le code a été placé ici parce que la table enfant doit être rempli APRES la table parent (FK contrainte)
 
                         var etu = new etudiant()
                         {

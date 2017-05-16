@@ -1,0 +1,82 @@
+﻿@model Tutorat.Models.listePrestationtmp
+
+@{
+    ViewBag.Title = "GestionPrestationsDeux";
+}
+
+<h2> Gestion Prestations </h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary list-panel" id="list-panel">
+            <div class="panel-heading list-panel-heading">
+                <h1 class="panel-title list-panel-title">Demande de tutorat  :</h1>
+            </div>
+            <!-- BEGIN FORM : -->
+            @using (Ajax.BeginForm("GestionPrestationsDeux", "GestionTutorat",
+                new AjaxOptions { LoadingElementId = "loader", OnSuccess = "onSuccess" }))
+            {
+                <div class="panel-body">
+                    <table id="assets-data-table"
+                           class="table table-striped table-bordered"
+                           style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[1].tutorat_id)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[1].tuteur_id)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[1].datePrestation)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[1].dureePrestation)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Items[1].compteRendu)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.select[1])
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int i = 0;}
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tutorat_id)
+                                        @Html.HiddenFor(m => m.Items[i].tutorat_id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tuteur_id)
+                                        @Html.HiddenFor(m => m.Items[i].tuteur_id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.datePrestation)
+                                        @Html.HiddenFor(m => m.Items[i].datePrestation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.dureePrestation)
+                                        @Html.HiddenFor(m => m.Items[i].dureePrestation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.compteRendu)
+                                        @Html.HiddenFor(m => m.Items[i].compteRendu)
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(model => model.select[i])
+                                    </td>
+                                </tr>
+                                i++;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <input type="submit" value="Soumettre" />
+                                }
+        </div>
+    </div>
+</div>

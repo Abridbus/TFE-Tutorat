@@ -27,13 +27,25 @@ namespace Tutorat.Controllers
 
         }
 
+        public string getMatricule()
+        {
+            string matricule = (from t in db.etudiant where t.mail.Contains(System.Web.HttpContext.Current.User.Identity.Name) select t.matricule).First();
+            return matricule;
+        }
+
+        // Ne va sélectionner  les tuteur_id que pour l'étudiant connecté?
         public int[] getIdTuteur(int idEtudiant)
         {
             string matricule = (from e in db.etudiant where e.etudiant_id == idEtudiant select e.matricule).First().ToString();
-            int[] tuteur_id = (from t in db.tuteur where t.matricule == "HE111111" select t.tuteur_id).ToArray();
+            int[] tuteur_id = (from t in db.tuteur where t.matricule == matricule select t.tuteur_id).ToArray();
 
             return tuteur_id;
 
+        }
+        public int[] getIdTutorat(string matricule)
+        {
+            int[] tutorat_id = (from t in db.tuteur from tc in db.tuteurCours where t.tuteur_id == tc.tuteur_id && t.matricule == matricule select tc.tutorat_id).ToArray();
+            return tutorat_id;
         }
 
         public void setSessionEtudiant(string mail)
@@ -68,5 +80,16 @@ namespace Tutorat.Controllers
             
             return items;
         }
+
+        /*public IEnumerable<SelectListItem> GenereTuteurs()
+        {
+            //Génrèe les tuteurs, après la sélection d'un tuteur, 
+            IEnumerable<SelectListItem> items;
+            var bdd = new Ephec();
+
+            items = bdd.
+
+            return items;
+        }*/
     }
 }

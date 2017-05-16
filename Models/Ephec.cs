@@ -151,5 +151,7 @@ namespace Tutorat.Models
         }
 
         public System.Data.Entity.DbSet<Tutorat.Models.gestionTutorat> gestionTutorats { get; set; }
+
+        public System.Data.Entity.DbSet<Tutorat.Models.prestationtmp> prestationtmps { get; set; }
     }
 }

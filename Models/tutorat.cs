@@ -133,12 +133,15 @@ namespace Tutorat.Models
 
         public int cours_id { get; set; }
 
+        [DisplayName("Commentaire")]
         [StringLength(255)]
         public string commentaire { get; set; }
 
+        [DisplayName("Date résignation")]
         public DateTime? dateResign { get; set; }
 
         [DefaultValue(600)]
+        [DisplayName("Temps rest.")]
         public int tempsTotal { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

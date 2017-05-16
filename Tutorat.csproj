@@ -329,6 +329,8 @@
     <Content Include="Views\GestionTutorat\TutoratEnCours.cshtml" />
     <Content Include="Views\GestionTutorat\TutoratFini.cshtml" />
     <Content Include="Views\GestionTutorat\Explication.cshtml" />
+    <Content Include="Views\GestionTutorat\GestionPrestationsUn.cshtml" />
+    <Content Include="Views\GestionTutorat\GestionPrestationsDeux.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

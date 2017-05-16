@@ -121,9 +121,7 @@ namespace Tutorat.Controllers
                 result.cote = (from er in bdd.etuResult where er.etudiant_id == result.etudiant_id && er.cours_id == result.cours_id select er.cote).First();
             };
             return tuteurTemp2;
-
         }
-
 
         // GET: GestionTutorat
         public ActionResult DemandesTutorat(int id)
@@ -227,8 +225,6 @@ namespace Tutorat.Controllers
                     bdd.SaveChanges();
                 }
 
-
-
                 tuteurtmp ttmp = bddtemp.tuteurtmp.FirstOrDefault(u => u.tuteur_id == tuteur_id);
                 int id_tuteur = 0;
                 if (ttmp != null)
@@ -299,7 +295,7 @@ namespace Tutorat.Controllers
         public ActionResult DemandesTutoratDeux(int DDCours)
         {
             // Si dd != 0, afficher partialView
-            // Si dd == 0, afficher tous? ou ne rien faire?
+            // Si dd == 0, Ne rien faire
             if (DDCours == 0)
             {
                 return View();
@@ -395,5 +391,128 @@ namespace Tutorat.Controllers
             return View();
         }
 
+        public ActionResult GestionPrestationsUn()
+        {
+            List<etudiant> ListEtudiants = bdd.etudiant.ToList();
+            List<tuteur> ListeTuteurs = bdd.tuteur.ToList();
+            List<tuteur> ListeTuteurs2 = new List<tuteur>();
+            List<SelectListItem> ListeDD = new List<SelectListItem>();
+
+            foreach(var i in ListEtudiants)
+            {
+                int j = 0;
+                if (i.matricule.Equals(ListeTuteurs[j].matricule)) {
+                        ListeTuteurs2.Add(ListeTuteurs[j]);
+                    }
+                j++;
+            }
+
+            foreach(var i in ListeTuteurs2)
+            {
+                string nom = bdd.etudiant.Where(e => e.matricule == i.matricule).Select(e => e.nom).Single();
+                string prenom = bdd.etudiant.Where(e => e.matricule == i.matricule).Select(e => e.prenom).Single();
+                ListeDD.Add(new SelectListItem()
+                {
+                    //PAsser le patricule !! Car problème si l'étudiant tuteur a plusieurs tuteur_id (ce qui est le cas si il a plusieurs tutorats !!)
+                    Value = i.matricule.ToString(),
+                    Text = string.Format("{0} - {1} {2}", i.matricule, nom, prenom)
+                });
+            };
+
+            ViewBag.tuteurs = ListeDD;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult GestionPrestationsUn(string tuteurs)
+        {
+            if(tuteurs == null)
+            {
+                return View();
+            }
+            return RedirectToAction("GestionPrestationsDeux", "GestionTutorat", new { matricule = tuteurs });
+        }
+
+        public ActionResult GestionPrestationsDeux(string matricule)
+        {
+            //Prendre la liste des tuteurs_id where matricule (plusieurs tuteurs_id par matricule possible)
+            int[] tuteurs_id = bdd.tuteur.Where(t => t.matricule == matricule).Select(t => t.tuteur_id).ToArray();
+
+            var items = bddtemp.prestationtmp
+                .Where(p => tuteurs_id.Contains(p.tuteur_id))
+                .ToList();
+
+            var listPrest = new listePrestationtmp()
+            {
+                Items = items
+            };
+            //Durées restantes pour les tutorats :
+            //int[] 
+
+            //Listes des libelles des cours
+
+            //List<libPrestation> infoPrestation = new List<libPrestation>()
+            /*var cours_ids =
+                bdd.tuteurCours
+                .Where(p => tuteurs_id.Contains(p.tuteur_id))
+                .Select(p => p.cours_id)
+                .ToList();
+            //bdd.tuteurCours                .Where(p => tuteurs_id.Contains(p.cours_id))                .Select(p => p.cours_id)                .ToList();
+
+            //var cours_libelles = "0";
+            var cours_libelles =  bdd.cours
+                .Where(c => cours_ids.Contains(c.cours_id)).Select(c => c.libelle).ToList();
+
+
+
+            var listInfo = new libPrestation()
+            {
+                cours_libelles = cours_libelles,
+                cours_ids = cours_ids,
+                tuteur_ids = tuteurs_id
+            };
+
+    */
+            return View(listPrest);
+        }
+
+        [HttpPost]
+        public ActionResult GestionPrestationsDeux(string matricule, listePrestationtmp ListPrest)
+        {
+
+            List<tutorat> Listtut = new List<tutorat>();
+            for(int i = 0; i < ListPrest.Items.Count(); i++)
+            //foreach(var i in ListPrest.Items)
+            {
+                int tutorat_id = ListPrest.Items[i].tutorat_id;
+                if(ListPrest.select[i] == true)
+                {
+                    tutorat tut = new tutorat();
+                    prestation prest = new prestation()
+                    {
+                        tuteur_id = ListPrest.Items[i].tuteur_id,
+                        datePrestation = ListPrest.Items[i].datePrestation,
+                        dureePrestation = ListPrest.Items[i].dureePrestation,
+                        compteRendu = ListPrest.Items[i].compteRendu,
+
+                    };
+                    // Ajout dans la table M-M PrestationTutorat (Linq style)
+                    tut = bdd.tutorat.FirstOrDefault(t => t.tuteur_id == prest.tuteur_id && t.tutorat_id == tutorat_id);
+                    Listtut.Add(tut);
+                    prest.tutorat = Listtut;
+
+                    if (ListPrest.Items[i] != null) {
+                        prestationtmp supp = bddtemp.prestationtmp.Where(p => p.tuteur_id == prest.tuteur_id && p.datePrestation == prest.datePrestation && p.dureePrestation == prest.dureePrestation && p.compteRendu == prest.compteRendu).First();
+                        bddtemp.prestationtmp.Remove(supp);
+                        bddtemp.SaveChanges();
+                    }
+                    bdd.prestation.Add(prest);
+
+
+                    bdd.SaveChanges();
+                }
+            }
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
