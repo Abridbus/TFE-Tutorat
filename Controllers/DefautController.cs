@@ -11,6 +11,7 @@ namespace Tutorat.Controllers
     public class DefautController : Controller
     {
         private Ephec db = new Ephec();
+        private EphecTemp bddtemp = new EphecTemp();
         public int getIdEtudiant()
         {
             int id;
@@ -58,7 +59,7 @@ namespace Tutorat.Controllers
 
             //Si l'étudiant est inscrit à des cours, cette var aura le nombre de cours inscrit comme valeur
             Session["nbCoursInscrit"] = etu.cours.Count();
-            
+
         }
 
         //Renvoie un objet IEnumerable pour faire un dropdown (menu déroulant) de cours
@@ -77,19 +78,134 @@ namespace Tutorat.Controllers
                     Text = c.libelle // La valeur affichée dans le dropdown sera le libellé du cours
                 });
 
-            
+
             return items;
         }
 
-        /*public IEnumerable<SelectListItem> GenereTuteurs()
+        /// <summary>
+        /// Pour la GestionTutoratController
+        /// </summary>
+        /// <returns></returns>
+        ///        
+        private IEnumerable<gestionTutorat> InfosDemandeurs(int coursID)
         {
-            //Génrèe les tuteurs, après la sélection d'un tuteur, 
-            IEnumerable<SelectListItem> items;
-            var bdd = new Ephec();
+            if (coursID != 0)
+            {
+                IEnumerable<gestionTutorat> demandesTemp = (
+                    from dtemp in bddtemp.demandeurtmp
+                    from dctemp in bddtemp.demandeurCourstmp
+                    where dtemp.demandeur_id == dctemp.demandeur_id
+                    && dctemp.cours_id == coursID
+                    select new gestionTutorat
+                    {
+                        demandeur_id = dtemp.demandeur_id,
+                        cours_id = dctemp.cours_id,
+                        matricule = dtemp.matricule,
+                        commentaire = dctemp.commentaire,
+                        dateInsc = dtemp.dateInsc,
+                        matriculeTuteurPref = dctemp.matriculeTuteurPref
+                    }).ToList();
 
-            items = bdd.
+                foreach (var result in demandesTemp)
+                {
+                    result.etudiant_id = (from e in db.etudiant where e.matricule == result.matricule select e.etudiant_id).First();
+                    result.nom = (from e in db.etudiant where e.matricule == result.matricule select e.nom).Single();
+                    result.prenom = (from e in db.etudiant where e.matricule == result.matricule select e.prenom).First();
+                    result.cours_libelle = (from c in db.cours where c.cours_id == result.cours_id select c.libelle).First();
+                    result.annee = (from e in db.etudiant where e.matricule == result.matricule select e.annee).First();
 
-            return items;
-        }*/
+                };
+                return demandesTemp;
+            }
+
+            IEnumerable<gestionTutorat> demandesTemp2 = (
+                from dtemp in bddtemp.demandeurtmp
+                from dctemp in bddtemp.demandeurCourstmp
+                where dtemp.demandeur_id == dctemp.demandeur_id
+                select new gestionTutorat
+                {
+                    cours_id = dctemp.cours_id,
+                    matricule = dtemp.matricule,
+                    commentaire = dctemp.commentaire,
+                    dateInsc = dtemp.dateInsc,
+                    matriculeTuteurPref = dctemp.matriculeTuteurPref
+                }).ToList();
+
+            foreach (var result in demandesTemp2)
+            {
+                result.etudiant_id = (from e in db.etudiant where e.matricule == result.matricule select e.etudiant_id).First();
+                result.nom = (from e in db.etudiant where e.matricule == result.matricule select e.nom).Single();
+                result.prenom = (from e in db.etudiant where e.matricule == result.matricule select e.prenom).First();
+                result.cours_libelle = (from c in db.cours where c.cours_id == result.cours_id select c.libelle).First();
+                result.annee = (from e in db.etudiant where e.matricule == result.matricule select e.annee).First();
+            };
+            return demandesTemp2;
+        }
+
+        private IEnumerable<gestionTutorat> InfosTuteurs(int coursID)
+        {
+            // Utilisation de gestionTutorat, dans ce cas-ci, pas de matriculeTuteurPref (le laisser à null)
+            // Mais uilisation de cote, qui représente la cote pour ce cours.
+
+            if (coursID != 0)
+            {
+                IEnumerable<gestionTutorat> tuteurTemp =
+                    (from ttemp in bddtemp.tuteurtmp
+                     from tctemp in bddtemp.tuteurCourstmp
+                     where ttemp.tuteur_id == tctemp.tuteur_id
+                 && tctemp.cours_id == coursID
+                     select new gestionTutorat
+                     {
+                         tuteur_id = ttemp.tuteur_id,
+                         cours_id = tctemp.cours_id,
+                         matricule = ttemp.matricule,
+                         commentaire = tctemp.commentaire,
+                         dateInsc = ttemp.dateInsc
+                     }).ToList();
+                foreach (var result in tuteurTemp)
+                {
+                    result.etudiant_id = (from e in db.etudiant where e.matricule == result.matricule select e.etudiant_id).First();
+                    result.nom = (from e in db.etudiant where e.matricule == result.matricule select e.nom).Single();
+                    result.prenom = (from e in db.etudiant where e.matricule == result.matricule select e.prenom).First();
+                    result.cours_libelle = (from c in db.cours where c.cours_id == result.cours_id select c.libelle).First();
+                    result.cote = (from er in db.etuResult where er.etudiant_id == result.etudiant_id select er.cote).First();
+                };
+                return tuteurTemp;
+            }
+            IEnumerable<gestionTutorat> tuteurTemp2 =
+                (from ttemp in bddtemp.tuteurtmp
+                 from tctemp in bddtemp.tuteurCourstmp
+                 where ttemp.tuteur_id == tctemp.tuteur_id
+                 select new gestionTutorat
+                 {
+                     cours_id = tctemp.cours_id,
+                     matricule = ttemp.matricule,
+                     commentaire = tctemp.commentaire,
+                     dateInsc = ttemp.dateInsc
+                 }).ToList();
+            foreach (var result in tuteurTemp2)
+            {
+                result.etudiant_id = (from e in db.etudiant where e.matricule == result.matricule select e.etudiant_id).First();
+                result.nom = (from e in db.etudiant where e.matricule == result.matricule select e.nom).Single();
+                result.prenom = (from e in db.etudiant where e.matricule == result.matricule select e.prenom).First();
+                result.cours_libelle = (from c in db.cours where c.cours_id == result.cours_id select c.libelle).First();
+                result.cote = (from er in db.etuResult where er.etudiant_id == result.etudiant_id && er.cours_id == result.cours_id select er.cote).First();
+            };
+            return tuteurTemp2;
+        }
+
+
+        /* 
+         * Listes utilisées à titres indicatifs 
+         * */
+
+        // GET: .../cours/Index
+        public ActionResult Index()
+        {
+            return View(db.cours.ToList());
+        }
+
+
+
     }
 }

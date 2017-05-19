@@ -18,17 +18,15 @@ namespace Tutorat.Controllers
     {
         private Ephec bdd = new Ephec();
 
-        // GET: Eperso
-        // Page finie.
+        // GET: Eperso/Info
         public ActionResult Info()
         {
             etudiant InfoEtudiant = bdd.etudiant.FirstOrDefault(u => u.mail.Contains(System.Web.HttpContext.Current.User.Identity.Name));
             return View(InfoEtudiant);
-
         }
         
         /*
-         * Si l'étudiant n'a pas de cours pour le moment : afficher le dropdown de cours
+         * Si l'étudiant n'a pas de cours pour le moment : afficher le dropdown de cours 
          * Si l'étudiant a déjà enregistré ses cours : table des cours (avec résultats?)
          * */
 
@@ -48,22 +46,10 @@ namespace Tutorat.Controllers
         public ActionResult CoursInscrits()
         {
             int id = getIdEtudiant();
-            /* Comment jusqu'à ce que je trouve comment afficher les cours de l'étudiantavec les résultats !!
-             * var test = from e in bdd.etudiant
-                       from c in bdd.cours
-                       from er in bdd.etuResult
-                       where e.etudiant_id == id && e.etudiant_id == er.etudiant_id
-                       where c.cours_id == er.cours_id
-                       select new resultCours { libelle = c.libelle, annee = c.annee, code = c.code, cote = er.cote, cours_id = er.cours_id };
 
             // Following : http://stackoverflow.com/questions/16793767/net-mvc-passing-linq-data-from-controller-to-view
             // More Edits part !! Perfect <3
-            listCoursResult list = new listCoursResult()
-            {
-                Items = test.AsEnumerable(),
-                
-            };
-            */
+
             var etuCours = from c in bdd.cours
                                    where c.etudiant.Any(e => e.etudiant_id == id)
                                    select new resultCours { cours_id = c.cours_id, libelle = c.libelle, code = c.code, annee = c.annee };
@@ -81,18 +67,8 @@ namespace Tutorat.Controllers
                 Items = etuResult.AsEnumerable(),
 
             };
-
-            //List <resultCours> i = new List<resultCours>();
-
-            /*foreach(var cours_id in etuCours)
-            {
-                if (etuCours.Contains(cours_id).Equals(etuResult.Contains(cours_id)))
-                {
-                    etuCours.Concat(etuCours.Where(cote)).Equals()
-                }
-            }
-            */
             return View(list);
+
         }
 
         [HttpPost]
@@ -146,6 +122,11 @@ namespace Tutorat.Controllers
             }
             // Ajouter le nombre de cours
             return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Explication()
+        {
+            return View();
         }
     }
 }

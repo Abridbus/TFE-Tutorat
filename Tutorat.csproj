@@ -318,7 +318,6 @@
     <Content Include="Views\Eperso\Index.cshtml" />
     <Content Include="Views\Eperso\Info.cshtml" />
     <Content Include="Views\Eperso\Cours.cshtml" />
-    <Content Include="Views\Eperso\_PartialView.cshtml" />
     <Content Include="Views\Test\cours.cshtml" />
     <Content Include="Views\Tutorat\MesPrestations.cshtml" />
     <Content Include="Views\Eperso\CoursInscrits.cshtml" />
@@ -331,6 +330,7 @@
     <Content Include="Views\GestionTutorat\Explication.cshtml" />
     <Content Include="Views\GestionTutorat\GestionPrestationsUn.cshtml" />
     <Content Include="Views\GestionTutorat\GestionPrestationsDeux.cshtml" />
+    <Content Include="Views\Eperso\Explication.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

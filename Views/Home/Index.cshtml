@@ -2,45 +2,59 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<div style="color: rgb(92, 135, 178);" class="jumbotron">
+    <h1 style="color: rgb(242, 137, 45); font-family:Times" ;>EPHEC - ePerso</h1>
+    <img src="~/Content/img/Ephec-Logo.jpg" alt="Sample Image" width="500px" />
+    <p class="lead">Page d'informations générales concernant la vie étudiante à l'EPHEC.</p>
+    <p> Elle est normalement divisée en plusieurs onglets tels que : les données personnelles, donnée d'inscription, les résultats, les horaires. </p>
+    <p> Pour ce travail, je n'ai repris que les onglets qui m'était nécessaire, l'idée étant d'intégrer l'onglet tutorat (qui apparait une fois connecté) à la plateforme déjà existante.</p>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
+    <div class="col-md-3">
+        <h2>Liste des cours</h2>
         <p>
             ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
             enables a clean separation of concerns and gives you full control over markup
             for enjoyable, agile development.
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p> @Html.ActionLink("Liste des cours \u00bb", "Index", "cours", null, new { @class = " btn btn-info" })</p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
+    <div class="col-md-3">
+        <h2>Liste d'étudiants</h2>
         <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <p> @Html.ActionLink("Liste d'étudiants \u00bb", "Index", "etudiants", null, new { @class = " btn btn-info" })</p>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-md-3">
+
     </div>
+    <div class="col-md-3">
+
+    </div>
+
 </div>
 
-<div>
-    @Html.ActionLink("Liste des cours", "Index", "cours")<br />
-    @Html.ActionLink("Liste d'étudiants", "Index", "etudiants")<br />
-    @Html.ActionLink("Liste de tuteurs", "ListTuteurs", "GestionTutorat")<br />
-    @Html.ActionLink("Liste de demandeurs", "ListDemandeurs", "GestionTutorat")<br />
-   @* @Html.ActionLink("", "", "") <br />
-    @Html.ActionLink("", "", "") <br />
-    @Html.ActionLink("", "", "") <br />
-    @Html.ActionLink("", "", "") <br />
-    @Html.ActionLink("", "", "") <br />
-    @Html.ActionLink("", "", "") <br />
-    @Html.ActionLink("", "", "") <br />
-*@
-</div>
+@if (Context.User.IsInRole("ConseilSocial"))
+{
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+            <h2>Liste de demandeurs</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p> @Html.ActionLink("Liste de demandeurs \u00bb", "ListDemandeurs", "GestionTutorat", null, new { @class = " btn btn-info" })</p>
+        </div>
+        <div class="col-md-3">
+            <h2>Liste de tuteurs</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p> @Html.ActionLink("Liste de tuteurs \u00bb", "ListTuteurs", "GestionTutorat", null, new { @class = " btn btn-info" }) </p>
+        </div>
+    </div>
+}
+<p style="display: none;">
+    \u00bb = &raquo;
+</p>

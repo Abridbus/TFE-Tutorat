@@ -14,11 +14,7 @@ namespace Tutorat.Controllers
     {
         private Ephec db = new Ephec();
 
-        // GET: cours
-        public ActionResult Index()
-        {
-            return View(db.cours.ToList());
-        }
+
 
         // GET: cours/Details/5
         public ActionResult Details(int? id)

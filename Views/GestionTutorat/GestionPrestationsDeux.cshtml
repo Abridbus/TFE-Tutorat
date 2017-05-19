@@ -22,10 +22,10 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Items[1].tutorat_id)
+                                    @Html.DisplayNameFor(model => model.Items[1].tutorat_id) - @Html.DisplayNameFor(model => model.Items[1].tuteur_id)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Items[1].tuteur_id)
+                                    Libellés
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Items[1].datePrestation)
@@ -49,10 +49,12 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.tutorat_id)
                                         @Html.HiddenFor(m => m.Items[i].tutorat_id)
-                                    </td>
-                                    <td>
+
                                         @Html.DisplayFor(modelItem => item.tuteur_id)
                                         @Html.HiddenFor(m => m.Items[i].tuteur_id)
+                                    </td>
+                                    <td>
+                                        @ViewBag.LibellesCours[i]
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.datePrestation)

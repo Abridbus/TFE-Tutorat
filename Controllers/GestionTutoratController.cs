@@ -149,16 +149,16 @@ namespace Tutorat.Controllers
         {
             ViewBag.infosDemandeurs = InfosDemandeurs(id);
             IEnumerable<gestionTutorat> tut = InfosTuteurs(id);
-                    List<SelectListItem> item = tut
-                        .Select(c => new SelectListItem
-                        {
-                            Value = c.tuteur_id.ToString(),
-                            Text = string.Format("{0} - {1} {2}", c.matricule, c.nom, c.prenom)
-                        }).ToList();
+            List<SelectListItem> item = tut
+                .Select(c => new SelectListItem
+                {
+                    Value = c.tuteur_id.ToString(),
+                    Text = string.Format("{0} - {1} {2}", c.matricule, c.nom, c.prenom)
+                }).ToList();
             ViewBag.tuteurs = item;
 
             copieBDD(model);
-            return View();
+            return RedirectToAction("Index", "Home");
         }
 
         public int copieBDD(listAccordTutorat mod)
@@ -204,7 +204,7 @@ namespace Tutorat.Controllers
 
                 //Création depuis le modèle d'un DEMANDEURCOURS pour l'ajouter dans la BDD officiel et le retirer de la BDD temp.
                 demandeurCourstmp dctmp = bddtemp.demandeurCourstmp.FirstOrDefault(u => u.demandeur_id == i.demandeur_id);
-                if(dctmp != null && dem_id != 0)
+                if (dctmp != null && dem_id != 0)
                 {
                     bddtemp.demandeurCourstmp.Remove(dctmp);
                     demandeurCours dc = new demandeurCours()
@@ -218,7 +218,7 @@ namespace Tutorat.Controllers
                     bdd.demandeurCours.Add(dc);
 
                     // /!\ Ordre de remove : d'abord demandeurCours, ensuite demandeur. Mëme chose dans tuteur
-                    if(dtmp != null) { bddtemp.demandeurtmp.Remove(dtmp); }
+                    if (dtmp != null) { bddtemp.demandeurtmp.Remove(dtmp); }
 
                     //Enregistrer l'ajout dans bdd et le retrait dans bddtemp
                     bddtemp.SaveChanges();
@@ -255,7 +255,7 @@ namespace Tutorat.Controllers
                     bdd.tuteurCours.Add(d);
 
                     // /!\ Ordre de remove (2)
-                    if (ttmp != null ) { bddtemp.tuteurtmp.Remove(ttmp); }
+                    if (ttmp != null) { bddtemp.tuteurtmp.Remove(ttmp); }
 
                     //Enregistrer l'ajout dans bdd et le retrait dans bddtemp
                     bddtemp.SaveChanges();
@@ -263,25 +263,17 @@ namespace Tutorat.Controllers
 
                     // Reupdate tutorat avec les demandeurs_id & tuteur_id
                     tutorat tupdate = bdd.tutorat.Where(t2 => t2.tutorat_id == tutorat_id).FirstOrDefault();
+
                     tupdate.tuteur_id = id_tuteur;
                     tupdate.demandeur_id = dem_id;
-
+                    bdd.Entry(tupdate).State = EntityState.Modified;
                     bdd.SaveChanges();
                 }
-           }
+            }
 
             return 0;
         }
 
-        public ActionResult ListTuteurs()
-        {
-            return View(InfosTuteurs(0));
-        }
-
-        public ActionResult ListDemandeurs()
-        {
-            return View(InfosDemandeurs(0));
-        }
 
         public ActionResult DemandesTutoratDeux()
         {
@@ -304,20 +296,20 @@ namespace Tutorat.Controllers
 
         }
 
-        public List<affichageTutorat> ajoutInfoTutorat(List<tutorat> tut )
+        public List<affichageTutorat> ajoutInfoTutorat(List<tutorat> tut)
         {
             List<affichageTutorat> affichageTut = new List<affichageTutorat>();
-             int i = 0;
+            int i = 0;
             foreach (var t in tut)
             {
                 affichageTut.Add(new affichageTutorat());
                 affichageTut[i].demandeur_id = t.demandeur_id;
-                affichageTut[i].matricule_demandeur = (from bt in bdd.tutorat from d in bdd.demandeur where bt.demandeur_id == t.demandeur_id select d.matricule).First();
+                affichageTut[i].matricule_demandeur = (from d in bdd.demandeur where d.demandeur_id == t.demandeur_id select d.matricule).First();
                 affichageTut[i].nom_demandeur = (from e in bdd.etudiant from d in bdd.demandeur where d.demandeur_id == t.demandeur_id && d.matricule == e.matricule select e.nom).First();
                 affichageTut[i].prenom_demandeur = (from e in bdd.etudiant from d in bdd.demandeur where d.demandeur_id == t.demandeur_id && d.matricule == e.matricule select e.prenom).First();
 
                 affichageTut[i].tuteur_id = t.tuteur_id;
-                affichageTut[i].matricule_tuteur = (from bt in bdd.tutorat from d in bdd.tuteur where bt.tuteur_id == t.tuteur_id select d.matricule).First();
+                affichageTut[i].matricule_tuteur = (from tu in bdd.tuteur where tu.tuteur_id == t.tuteur_id select tu.matricule).First();
                 affichageTut[i].nom_tuteur = (from e in bdd.etudiant from tu in bdd.tuteur where tu.tuteur_id == t.tuteur_id && tu.matricule == e.matricule select e.nom).First();// error ??
                 affichageTut[i].prenom_tuteur = (from e in bdd.etudiant from d in bdd.tuteur where d.tuteur_id == t.tuteur_id && d.matricule == e.matricule select e.prenom).First();
 
@@ -327,7 +319,17 @@ namespace Tutorat.Controllers
 
             return affichageTut;
         }
-        
+        public ActionResult ListTuteursTmp()
+        {
+            return View(InfosTuteurs(0));
+        }
+
+        public ActionResult ListDemandeurs()
+        {
+            return View(InfosDemandeurs(0));
+        }
+
+
 
         public ActionResult TutoratEnCours()
         {
@@ -374,15 +376,15 @@ namespace Tutorat.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "tutorat_id, demandeur_id, tuteur_id, cours_id, commentaire,dateResign, tempsTotal")] tutorat tutorat)
+        public ActionResult Edit([Bind(Include = "tutorat_id, demandeur_id, tuteur_id, cours_id, commentaire,dateResign, tempsTotal")] tutorat t)
         {
             if (ModelState.IsValid)
             {
-                bdd.Entry(tutorat).State = EntityState.Modified;
+                bdd.Entry(t).State = EntityState.Modified;
                 bdd.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
-            return View(tutorat);
+            return View(t);
         }
 
         public ActionResult Explication()
@@ -393,31 +395,21 @@ namespace Tutorat.Controllers
 
         public ActionResult GestionPrestationsUn()
         {
-            List<etudiant> ListEtudiants = bdd.etudiant.ToList();
-            List<tuteur> ListeTuteurs = bdd.tuteur.ToList();
-            List<tuteur> ListeTuteurs2 = new List<tuteur>();
             List<SelectListItem> ListeDD = new List<SelectListItem>();
+            List<string> ListeTuteurs = bdd.tuteur.Select(t => t.matricule).Distinct().ToList();
 
-            foreach(var i in ListEtudiants)
+            foreach (var i in ListeTuteurs)
             {
-                int j = 0;
-                if (i.matricule.Equals(ListeTuteurs[j].matricule)) {
-                        ListeTuteurs2.Add(ListeTuteurs[j]);
-                    }
-                j++;
-            }
-
-            foreach(var i in ListeTuteurs2)
-            {
-                string nom = bdd.etudiant.Where(e => e.matricule == i.matricule).Select(e => e.nom).Single();
-                string prenom = bdd.etudiant.Where(e => e.matricule == i.matricule).Select(e => e.prenom).Single();
+                string nom = bdd.etudiant.Where(e => e.matricule == i).Select(e => e.nom).Single();
+                string prenom = bdd.etudiant.Where(e => e.matricule == i).Select(e => e.prenom).Single();
                 ListeDD.Add(new SelectListItem()
                 {
                     //PAsser le patricule !! Car problème si l'étudiant tuteur a plusieurs tuteur_id (ce qui est le cas si il a plusieurs tutorats !!)
-                    Value = i.matricule.ToString(),
-                    Text = string.Format("{0} - {1} {2}", i.matricule, nom, prenom)
+                    Value = i.ToString(),
+                    Text = string.Format("{0} - {1} {2}", i, nom, prenom)
                 });
             };
+
 
             ViewBag.tuteurs = ListeDD;
             return View();
@@ -426,7 +418,7 @@ namespace Tutorat.Controllers
         [HttpPost]
         public ActionResult GestionPrestationsUn(string tuteurs)
         {
-            if(tuteurs == null)
+            if (tuteurs == null)
             {
                 return View();
             }
@@ -446,33 +438,26 @@ namespace Tutorat.Controllers
             {
                 Items = items
             };
-            //Durées restantes pour les tutorats :
-            //int[] 
 
-            //Listes des libelles des cours
+            List<string> libelles = new List<string>();
+            List<int> idsCours = new List<int>();
+            List<int> ids = new List<int>();
 
-            //List<libPrestation> infoPrestation = new List<libPrestation>()
-            /*var cours_ids =
-                bdd.tuteurCours
-                .Where(p => tuteurs_id.Contains(p.tuteur_id))
-                .Select(p => p.cours_id)
-                .ToList();
-            //bdd.tuteurCours                .Where(p => tuteurs_id.Contains(p.cours_id))                .Select(p => p.cours_id)                .ToList();
-
-            //var cours_libelles = "0";
-            var cours_libelles =  bdd.cours
-                .Where(c => cours_ids.Contains(c.cours_id)).Select(c => c.libelle).ToList();
-
-
-
-            var listInfo = new libPrestation()
+            foreach (var i in listPrest.Items)
             {
-                cours_libelles = cours_libelles,
-                cours_ids = cours_ids,
-                tuteur_ids = tuteurs_id
-            };
+                ids.Add(i.tuteur_id);
+            }
 
-    */
+            foreach (var j in ids)
+            {
+                int idCours = bdd.tuteurCours.Where(t => t.tuteur_id == j).Select(t => t.cours_id).First();
+                idsCours.Add(idCours);
+                string lib = bdd.cours.Where(c => c.cours_id == idCours).Select(c => c.libelle).First();
+                libelles.Add(lib);
+            }
+
+            ViewBag.LibellesCours = libelles;
+
             return View(listPrest);
         }
 
@@ -481,11 +466,11 @@ namespace Tutorat.Controllers
         {
 
             List<tutorat> Listtut = new List<tutorat>();
-            for(int i = 0; i < ListPrest.Items.Count(); i++)
+            for (int i = 0; i < ListPrest.Items.Count(); i++)
             //foreach(var i in ListPrest.Items)
             {
                 int tutorat_id = ListPrest.Items[i].tutorat_id;
-                if(ListPrest.select[i] == true)
+                if (ListPrest.select[i] == true)
                 {
                     tutorat tut = new tutorat();
                     prestation prest = new prestation()
@@ -498,10 +483,17 @@ namespace Tutorat.Controllers
                     };
                     // Ajout dans la table M-M PrestationTutorat (Linq style)
                     tut = bdd.tutorat.FirstOrDefault(t => t.tuteur_id == prest.tuteur_id && t.tutorat_id == tutorat_id);
+                    int duree = tut.tempsTotal - ListPrest.Items[i].dureePrestation;
+                    if (duree >= 0)
+                    {
+                        tut.tempsTotal = duree;
+                        bdd.Entry(tut).State = EntityState.Modified;
+                    }
                     Listtut.Add(tut);
                     prest.tutorat = Listtut;
 
-                    if (ListPrest.Items[i] != null) {
+                    if (ListPrest.Items[i] != null)
+                    {
                         prestationtmp supp = bddtemp.prestationtmp.Where(p => p.tuteur_id == prest.tuteur_id && p.datePrestation == prest.datePrestation && p.dureePrestation == prest.dureePrestation && p.compteRendu == prest.compteRendu).First();
                         bddtemp.prestationtmp.Remove(supp);
                         bddtemp.SaveChanges();

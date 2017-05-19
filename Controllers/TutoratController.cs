@@ -28,26 +28,43 @@ namespace Tutorat.Controllers
             //Ajouter la vérification des tutorats :
             // Si le tutorat existe deja, ne pas l'afficher (Comment gérer la réouverture par Mme Alen??)
             //bool i = bddtemp.demandeurtmp.Where(d => d.demandeurCourstmp.);
+
+            //Tous les cours de l'étudiant
             var coursEtu =
-                 from e in db.etudiant
-                 from er in db.etuResult
-                 from c in db.cours
-                 where e.etudiant_id == er.etudiant_id
-                 && c.cours_id == er.cours_id
-                 && e.etudiant_id == id
-                 && er.cote < 10
-                 select new resultCours
-                 {
-                     libelle = c.libelle,
-                     cours_id = c.cours_id,
-                     annee = c.annee,
-                     code = c.code,
-                     cote = er.cote
-                 };
-            List<resultCours> list = coursEtu.ToList();
+                 db.etudiant
+                    .Single(e => e.etudiant_id == id)
+                    .cours.Select(c => new resultCours
+                    {
+                        libelle = c.libelle,
+                        cours_id = c.cours_id,
+                        annee = c.annee,
+                        code = c.code
+
+                    }).ToList();
+
+            //Les cours ou l'étudiant à des résultats
+            var coursEtuResult = (from e in db.etudiant
+                                 from er in db.etuResult
+                                 from c in db.cours
+                                 where e.etudiant_id == er.etudiant_id
+                                 && c.cours_id == er.cours_id
+                                 && e.etudiant_id == id
+                                 && er.cote > 9
+                                  select (new resultCours
+                                 {
+                                     libelle = c.libelle,
+                                     cours_id = c.cours_id,
+                                     annee = c.annee,
+                                     code = c.code
+
+                                 })).ToList();
+
+            //Tous les cours de l'étudiant - les cours ou l'étudiant à des résultats (problème de exists)
+            var result = coursEtu.Where(p => !coursEtuResult.Any(x => x.cours_id == p.cours_id)).ToList();
+
             //Ajout des cours "Table de conversation", "remédiation Fr", "Extra académiques"    (pour l'exemple je n'en ai ajouté qu'un des 3)
-            list.Add(new resultCours { libelle = "Table de Conversation", cours_id = 1002, annee=1, code="HELP01"});
-            ViewBag.listCoursDemande = list;
+            result.Add(new resultCours { libelle = "Table de Conversation", cours_id = 1002, annee=1, code="HELP01"});
+            ViewBag.listCoursDemande = result;
             return View();
         }
 
@@ -110,7 +127,7 @@ namespace Tutorat.Controllers
         {
             return View();
         }
-
+ 
         // GET: Tutorat/Offre
         // /!\ page crée mais VIDE !!
         public ActionResult Offre()
@@ -135,7 +152,22 @@ namespace Tutorat.Controllers
                 };
             //List<string> list = 
             List<resultCours> list = coursEtu.ToList();
+
+
+            string matricule = getMatricule();
+            //TuteurIdTmp : Voir si l'étudiant est deja en Offre de tutorat dans la bdd temp :
+            int[] tuteuridstmp = bddtemp.tuteurtmp.Where(t => t.matricule == matricule).Select(t => t.tuteur_id).ToArray();
+
+            int[] tuteurids = bddtemp.tuteurtmp.Where(t => t.matricule == matricule).Select(t => t.tuteur_id).ToArray();
+            //Vérif : si l'étudiant est déjà en Offre de tutorat (mais pas encore de tutorat trouvé) : 
+
             ViewBag.listCoursOffre = coursEtu; //list;
+
+            if(tuteuridstmp.Length != 0 ||tuteurids.Length != 0)
+            {
+                ViewBag.DejaTuteur = true;
+            } else { ViewBag.DejaTuteur = false; }
+
             return View();
         }
 
