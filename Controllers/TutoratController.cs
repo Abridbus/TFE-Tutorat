@@ -63,7 +63,7 @@ namespace Tutorat.Controllers
             var result = coursEtu.Where(p => !coursEtuResult.Any(x => x.cours_id == p.cours_id)).ToList();
 
             //Ajout des cours "Table de conversation", "remédiation Fr", "Extra académiques"    (pour l'exemple je n'en ai ajouté qu'un des 3)
-            result.Add(new resultCours { libelle = "Table de Conversation", cours_id = 1002, annee=1, code="HELP01"});
+            //result.Add(new resultCours { libelle = "Table de Conversation", cours_id = 1002, annee=1, code="HELP01"});
             ViewBag.listCoursDemande = result;
             return View();
         }
@@ -275,13 +275,6 @@ namespace Tutorat.Controllers
 
             }
             return RedirectToAction("Index", "Home");
-        }
-
-
-        // GET: Tutorat
-        public ActionResult Index()
-        {
-            return View(db.tutorat.ToList());
         }
 
         /* ACTUELLEMENT : UNIQUEMENT AFFICHAGE DES ONGLETS ET PAGES ASSOCIÉS (DEMANDE, EXPLANATION, OFFRE, REGLEMENT (a finir)

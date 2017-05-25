@@ -193,19 +193,5 @@ namespace Tutorat.Controllers
             };
             return tuteurTemp2;
         }
-
-
-        /* 
-         * Listes utilisées à titres indicatifs 
-         * */
-
-        // GET: .../cours/Index
-        public ActionResult Index()
-        {
-            return View(db.cours.ToList());
-        }
-
-
-
     }
 }

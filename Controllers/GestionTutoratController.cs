@@ -16,7 +16,7 @@ namespace Tutorat.Controllers
         private Ephec bdd = new Ephec();
         private EphecTemp bddtemp = new EphecTemp();
 
-        private IEnumerable<gestionTutorat> InfosDemandeurs(int coursID)
+        private IEnumerable<gestionTutorat> InfosDemandeurstmp(int coursID)
         {
             if (coursID != 0)
             {
@@ -71,7 +71,7 @@ namespace Tutorat.Controllers
             return demandesTemp2;
         }
 
-        private IEnumerable<gestionTutorat> InfosTuteurs(int coursID)
+        private IEnumerable<gestionTutorat> InfosTuteurstmp(int coursID)
         {
             // Utilisation de gestionTutorat, dans ce cas-ci, pas de matriculeTuteurPref (le laisser à null)
             // Mais uilisation de cote, qui représente la cote pour ce cours.
@@ -123,13 +123,14 @@ namespace Tutorat.Controllers
             return tuteurTemp2;
         }
 
+
         // GET: GestionTutorat
         public ActionResult DemandesTutorat(int id)
         {
-            ViewBag.infosDemandeurs = InfosDemandeurs(id);
+            ViewBag.infosDemandeurs = InfosDemandeurstmp(id);
 
             // Dropdown de tuteur, recherche dans  les 2 bdd :
-            IEnumerable<gestionTutorat> tut = InfosTuteurs(id);
+            IEnumerable<gestionTutorat> tut = InfosTuteurstmp(id);
 
             List<SelectListItem> item = tut
                 .Select(c => new SelectListItem
@@ -147,8 +148,8 @@ namespace Tutorat.Controllers
         [HttpPost]
         public ActionResult DemandesTutorat(listAccordTutorat model, int id)
         {
-            ViewBag.infosDemandeurs = InfosDemandeurs(id);
-            IEnumerable<gestionTutorat> tut = InfosTuteurs(id);
+            ViewBag.infosDemandeurs = InfosDemandeurstmp(id);
+            IEnumerable<gestionTutorat> tut = InfosTuteurstmp(id);
             List<SelectListItem> item = tut
                 .Select(c => new SelectListItem
                 {
@@ -321,14 +322,13 @@ namespace Tutorat.Controllers
         }
         public ActionResult ListTuteursTmp()
         {
-            return View(InfosTuteurs(0));
+            return View(InfosTuteurstmp(0));
         }
 
-        public ActionResult ListDemandeurs()
+        public ActionResult ListDemandeursTmp()
         {
-            return View(InfosDemandeurs(0));
+            return View(InfosDemandeurstmp(0));
         }
-
 
 
         public ActionResult TutoratEnCours()
@@ -351,8 +351,6 @@ namespace Tutorat.Controllers
             //Viewbag at et garder le type list dans le model de la view
             //Viewbag at car on affiche plus d'informations, jouer avec la boucle du model pour afficher
             ViewBag.InfoSupp = ajoutInfoTutorat(tut);
-
-
             return View(tut);
         }
 

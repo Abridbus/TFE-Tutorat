@@ -24,9 +24,6 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <!-- Peut etre rendre la page contact accessible uniquement dans le footer? -->
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-
                     <!-- Afficher uniquement si l'utilisateur est connecté -->
                     @if (Context.User.Identity.IsAuthenticated)
                     {

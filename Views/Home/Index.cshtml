@@ -14,47 +14,38 @@
     <div class="col-md-3">
         <h2>Liste des cours</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            L'ensemble des cours contenu dans la base de données.
         </p>
         <p> @Html.ActionLink("Liste des cours \u00bb", "Index", "cours", null, new { @class = " btn btn-info" })</p>
     </div>
     <div class="col-md-3">
         <h2>Liste d'étudiants</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p>
+            L'ensemble des étudiants ayant un compte dans la base de données.
+        </p>
         <p> @Html.ActionLink("Liste d'étudiants \u00bb", "Index", "etudiants", null, new { @class = " btn btn-info" })</p>
     </div>
+@if (Context.User.IsInRole("ConseilSocial"))
+{
     <div class="col-md-3">
-
+        <h2>Liste de demandeurs tmp</h2>
+        <p>
+            La liste des demandeurs temporaire, contenant les étudiants demandeur en attente de mise en lien avec un tuteur pour former un tutorat.
+        </p>
+        <p> @Html.ActionLink("Liste de demandeurs \u00bb", "ListDemandeursTmp", "GestionTutorat", null, new { @class = " btn btn-info" })</p>
     </div>
     <div class="col-md-3">
-
+        <h2>Liste de tuteurs tmp</h2>
+        <p>
+            La collection des tuteurs en attente de mise en relation avec un demandeur pour former un tutorat.
+        </p>
+        <p> @Html.ActionLink("Liste de tuteurs \u00bb", "ListTuteursTmp", "GestionTutorat", null, new { @class = " btn btn-info" }) </p>
     </div>
+}
 
 </div>
 
-@if (Context.User.IsInRole("ConseilSocial"))
-{
-    <div class="row">
-        <div class="col-md-3">
 
-        </div>
-        <div class="col-md-3">
-
-        </div>
-        <div class="col-md-3">
-            <h2>Liste de demandeurs</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p> @Html.ActionLink("Liste de demandeurs \u00bb", "ListDemandeurs", "GestionTutorat", null, new { @class = " btn btn-info" })</p>
-        </div>
-        <div class="col-md-3">
-            <h2>Liste de tuteurs</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p> @Html.ActionLink("Liste de tuteurs \u00bb", "ListTuteurs", "GestionTutorat", null, new { @class = " btn btn-info" }) </p>
-        </div>
-    </div>
-}
 <p style="display: none;">
     \u00bb = &raquo;
 </p>
