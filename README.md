@@ -9,5 +9,5 @@ L’onglet sera le même pour tous les étudiants de la première à la troisiè
 
 Les étudiants demandeurs rempliront une fiche décrivant leurs besoins (cours à difficulté selon ceux auxquels ils sont inscrits + commentaire(s) éventuel(s)). 
 Les étudiants tuteurs devront remplir un tableau avec les cours qu’ils peuvent donner. Une fois le feu vert accordé, les tuteurs pourront entrer en contact avec leur étudiant et donner des cours. 
-Lorsque la feuille de prestation remplie, ils devront rendre leur feuille de route à Madame Alen (comme précédemment) et remplir un tableau situé sous l’onglet offre. 
-De son côté, Madame Alen et/ou ses collègues n’auront plus qu’à valider en comparant la feuille reçue et les informations fournies.
+Lorsque la feuille de prestation remplie, ils devront rendre leur feuille de route à Madame A*** (comme précédemment) et remplir un tableau situé sous l’onglet offre. 
+De son côté, Madame A*** et/ou ses collègues n’auront plus qu’à valider en comparant la feuille reçue et les informations fournies.
