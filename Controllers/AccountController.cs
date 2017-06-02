@@ -168,7 +168,7 @@ namespace Tutorat.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    //Ajouter les infos dans la table etudiant ici.
+                    // AJOUT TFE : Ajouter les infos dans la table etudiant ici + sauvegarde en bdd
 
                         var etu = new etudiant()
                         {

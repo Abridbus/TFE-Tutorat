@@ -34,7 +34,7 @@
         <th>
             @Html.DisplayNameFor(model => model.tempsTotal)
         </th>
-        <th></th>
+        <th> Editer </th>
     </tr>
 @{var i = 0;}
 @foreach (var item in Model) {
@@ -58,8 +58,7 @@
             @Html.DisplayFor(modelItem => item.tempsTotal)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.tutorat_id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.tutorat_id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.tutorat_id })
         </td>
     </tr>
     i++;

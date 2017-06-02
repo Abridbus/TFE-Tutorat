@@ -24,6 +24,10 @@ namespace Tutorat.Models
 
         public int tuteur_id { get; set; }
 
+        public string matriculeDemandeur { get; set; }
+
+        public string nomPrenomDemandeur { get; set; }
+
         public int dureeRestante { get; set; }
 
         public int cours_id { get; set; }

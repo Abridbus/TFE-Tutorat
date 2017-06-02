@@ -6,40 +6,21 @@
 <h2>Explication de la gestion de tutorats :</h2>
 
 <p> Cette page est uniquement accessible aux membres du Conseil Social. Pour ajouter l'accès à quelqu'un (actuellement uniquement Madame Alen), il faut passer par la base de données.</p>
-<p> La gestion des tutorats se fera normalement dans le programme <em>STI.net</em>. </p>
+<p style="color:red;"> La gestion des tutorats se fera normalement dans le programme <em>STI.net</em>. </p>
 
 <h3> 1. Les demandes de tutorat :</h3>
 <p> Une fois le cours choisi, nous sommes redirigés vers la page des demandeurs de tutorats.</p>
 <p> Il est possible d'associer des tuteurs ici (sur base par exemple du matricule de préférence entré par le demandeur) via le menu déroulant (appelé Dropdown en anglais) et de cocher avant de soumettre.</p>
-<p> Une fois la soumission effectuée, le demandeur est associé à un tuteur. Cette action va créer un tutorat et effacer les deux étudiants de leurs listes respectives (l'étudiant demandeur de la liste des demandeurs et l'étudiant tuteur de la liste des tuteurs).</p>
+<p> Une fois la soumission effectuée, le demandeur est associé à un tuteur. Cette action va créer un tutorat et effacer les deux étudiants de leurs listes et tables de base de données respectives (l'étudiant demandeur de la liste des demandeurs et l'étudiant tuteur de la liste des tuteurs).</p>
 
 <h3> 2. Les listes liées à la Gestion de Tutorat :</h3>
-<p> Pour donner une idée du nombre et des cours des étudiants, en donnant un certain nombre de renseignement sur les demandeurs tels que : </p>
-<ul>
-    <li>ID - matricule</li>
-    <li> Nom - Prénom </li>
-    <li> cours_id </li>
-    <li> cours_libelle</li>
-    <li> cote </li>
-    <li> commentaire </li>
-    <li> date_insc </li>
-    <li> matricule Tuteur Pref</li>
-    <li> étudiant associé </li>
-    <li> accord</li>
-</ul>
+<p> Ces listes ont pour objectif de donner une idée du nombre et des cours des étudiants, en donnant un certain nombre de renseignement sur les demandeurs.</p>
 
 <h4> 2.A. La liste de Demandeurs :</h4>
-<p> Dans cette liste, nous pouvons voir l'entiereté des étudiants demandeurs n'ayant <b>PAS</b> été accepté par Madame Alen.</p> 
-<p> Cette liste ne sert qu'à titre informatif. Il est possible d'ajouter un filtre pour trier plus facilement.</p>
-<br >
-<p> @Html.ActionLink("Listes des Demandeurs", "ListDemandeurs", "GestionTutorat", null, new { @class = "btn btn-primary btn-large" })</p> 
-
+<p> Dans cette liste, nous pouvons voir l'entiereté des étudiants demandeurs n'ayant <b>PAS</b> été accepté par Madame Alen : @Html.ActionLink("Listes des Demandeurs", "ListDemandeursTmp", "GestionTutorat", null, new { @class = "btn btn-primary btn-large" })</p> 
 
 <h4> 2.B. La liste de Tuteurs</h4>
-<p> Dans cette liste, nous pouvoir l'entiereté des étudiants qui se propose comme tuteurs.</p>
-<p> Cette liste ne sert qu'à titre informatif. Il est possible d'ajouter un filtre pour trier plus facilement.</p>
-<br>
-<p> @Html.ActionLink("Listes des tuteurs", "ListTuteurs", "GestionTutorat", null, new { @class = "btn btn-primary btn-large" })</p> 
+<p> Dans cette liste, nous pouvoir l'entiereté des étudiants qui se propose comme tuteurs : @Html.ActionLink("Listes des tuteurs", "ListTuteursTmp", "GestionTutorat", null, new { @class = "btn btn-primary btn-large" })</p>
 
 <h3> 3. Les tutorats :</h3>
 <p> Une fois les tutorats mis en place, la gestion est possible pour les utilisateurs du Conseil Social (un compte a été créé pour Madame Alen). </p>

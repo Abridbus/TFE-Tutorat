@@ -8,6 +8,8 @@
 
 <p> Ajouts des prestations étudiants </p>
 
+<p style="color:red"> Attention : tous les champs doivent être remplis pour que la prestation soit encodée.</p>
+
 @using (Ajax.BeginForm("MesPrestations", "Tutorat", new AjaxOptions()
                         //{
                         //HttpMethod = "POST",
@@ -25,20 +27,26 @@
             <div class="col-md-12">
                 <div class="panel panel-primary list-panel" id="list-panel">
                     <div class="panel-heading list-panel-heading">
-                        <h1 class="panel-title list-panel-title">@id.cours_id - @id.cours_libelle </h1>
+                        <h1 class="panel-title list-panel-title">@id.cours_id - @id.cours_libelle avec l'étudiant @id.nomPrenomDemandeur (@id.matriculeDemandeur)</h1>
                     </div>
                     <div class="panel-body" >
                         <div class='@(string.Format("cours{0}", i))'>
                             <div class="form-group">
-                                <p style="color:red;"> Durée déjà prestée pour ce tutorat : @id.dureeRestante min</p>
+                                <p style="color:red;"> Durée restante pour ce tutorat : @id.dureeRestante min</p>
                                 <p> La durée ne peut pas dépasser 10h pour un tutorat (hors accord avec le Conseil Social) et 3h par jour par tutorat. Tout dépassement ne sera pas considéré sans accord.</p>
                                 Date : @Html.TextBoxFor(m => m.Items[i].datePrestation, "{0:dd/MM/yyyy}" ,new { type = "date", max = "DateTime.Now.ToString('d')"})
-                                @Html.ValidationMessageFor(m => m.Items[i].datePrestation, "", new { @class = "text-danger" })
+                                
 
                                 Durée de prestation: @Html.TextBoxFor(m => m.Items[i].dureePrestation, new { @type = "number", min = "0", max = "180" })
-                                @Html.ValidationMessageFor(m => m.Items[i].dureePrestation, "", new { @class = "text-danger" })
+
 
                                 Compte rendu : @Html.TextAreaFor(m => m.Items[i].compteRendu, new { maxlength = "512", placeholder = "Max 512 caractères, soyez bref!", rows = "5", cols = "50" })
+
+                                <br />
+                                @Html.ValidationMessageFor(m => m.Items[i].dureePrestation, "", new { @class = "text-danger" })
+                                <br />
+                                @Html.ValidationMessageFor(m => m.Items[i].datePrestation, "", new { @class = "text-danger" })
+                                <br />
                                 @Html.ValidationMessageFor(m => m.Items[i].compteRendu, "", new { @class = "text-danger" })
                             </div>
                             <div class="clear"></div>
@@ -51,5 +59,13 @@
         </div>
         i++;
     }
-    <input type="submit" value="Soumettre" />
+    <p class="text-danger"  >
+        <script type="text/javascript">
+            $(".text-danger").ready(function () {
+                $(".text-danger").fadeOut(10000);
+            });
+        </script>
+       @ViewData["save"]
+    </p>
+    <input type="submit" value="Soumettre"/>
 }

@@ -19,15 +19,15 @@ namespace Tutorat.Controllers
         private Ephec db = new Ephec();
         private EphecTemp bddtemp = new EphecTemp();
 
-
+        /// <summary>
+        /// Demande de tutorat :
+        /// Affiche une liste de cours auxquels l'étudiant connecté peut s'inscrire
+        /// </summary>
+        /// <returns> Une vue </returns>
         // GET: Tutorat/Demande
-        // /!\ page crée mais VIDE !!
         public ActionResult Demande()
         {
             int id = getIdEtudiant();
-            //Ajouter la vérification des tutorats :
-            // Si le tutorat existe deja, ne pas l'afficher (Comment gérer la réouverture par Mme Alen??)
-            //bool i = bddtemp.demandeurtmp.Where(d => d.demandeurCourstmp.);
 
             //Tous les cours de l'étudiant
             var coursEtu =
@@ -59,7 +59,7 @@ namespace Tutorat.Controllers
 
                                  })).ToList();
 
-            //Tous les cours de l'étudiant - les cours ou l'étudiant à des résultats (problème de exists)
+            //Tous les cours de l'étudiant - les cours ou l'étudiant à des résultats > 9
             var result = coursEtu.Where(p => !coursEtuResult.Any(x => x.cours_id == p.cours_id)).ToList();
 
             //Ajout des cours "Table de conversation", "remédiation Fr", "Extra académiques"    (pour l'exemple je n'en ai ajouté qu'un des 3)
@@ -68,6 +68,11 @@ namespace Tutorat.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Gestion des demandes de l'étudiant : envoie les cours sélectionnés en BDDtemp
+        /// </summary>
+        /// <param name="model"> La liste de cours </param>
+        /// <returns> Redirige à l'index </returns>
         [HttpPost]
         public ActionResult Demande(listeDemandeTmp model)
         {
@@ -95,7 +100,7 @@ namespace Tutorat.Controllers
                         demandeurID = bddtemp.demandeurtmp.Max(u => u.demandeur_id);
                     }
 
-                    model.Items[i].matricule = Session["matricule"].ToString();
+                    model.Items[i].matricule = getMatricule();
                     Session["EnDemande"] = true;
                     dtemp.matricule = model.Items[i].matricule;
                     dtemp.dateInsc = DateTime.Now;
@@ -104,32 +109,44 @@ namespace Tutorat.Controllers
                     dctemp.demandeur_id = dtemp.demandeur_id;
                     dctemp.cours_id = model.Items[i].cours_id;
                     dctemp.commentaire = model.Items[i].commentaire;
-                    dctemp.matriculeTuteurPref = model.Items[i].matriculeTuteurPref; // Vérifier si marchera si il est vide ! (normalement oui !!)
+                    dctemp.matriculeTuteurPref = model.Items[i].matriculeTuteurPref;
                     enregDemande(dtemp, dctemp);
-
                 }
 
-            } 
-            
+            }
+
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Ajout des demandeurstmp et demandeurCourstmp en BDDtmp + sauvegarde de la BDDtmp
+        /// </summary>
+        /// <param name="d"> demandeurtmp </param>
+        /// <param name="dc"> demandeurCourstmp</param>
         public void enregDemande(demandeurtmp d, demandeurCourstmp dc)
         {
             bddtemp.demandeurtmp.Add(d);
             bddtemp.demandeurCourstmp.Add(dc);
             bddtemp.SaveChanges();
+
         }
 
+        /// <summary>
+        /// Affiche la page d'explication des tutorats
+        /// </summary>
+        /// <returns> Une vue </returns>
         // GET: Tutorat/Explanation
-        // /!\ page crée mais VIDE !!
         public ActionResult Explication()
         {
             return View();
         }
- 
+
+        /// <summary>
+        /// Offre de tutorat :
+        /// Affiche une liste de cours auxquels l'étudiant connecté peut s'inscrire
+        /// </summary>
+        /// <returns> Une vue </returns>
         // GET: Tutorat/Offre
-        // /!\ page crée mais VIDE !!
         public ActionResult Offre()
         {
             int id = getIdEtudiant();
@@ -141,7 +158,7 @@ namespace Tutorat.Controllers
                 where e.etudiant_id == er.etudiant_id
                 && c.cours_id == er.cours_id
                 && e.etudiant_id == id
-                && er.cote >= 10
+                && er.cote >= 14
                 select new resultCours
                 {
                     libelle = c.libelle,
@@ -150,27 +167,27 @@ namespace Tutorat.Controllers
                     code = c.code,
                     cote = er.cote
                 };
-            //List<string> list = 
             List<resultCours> list = coursEtu.ToList();
-
 
             string matricule = getMatricule();
             //TuteurIdTmp : Voir si l'étudiant est deja en Offre de tutorat dans la bdd temp :
             int[] tuteuridstmp = bddtemp.tuteurtmp.Where(t => t.matricule == matricule).Select(t => t.tuteur_id).ToArray();
-
             int[] tuteurids = bddtemp.tuteurtmp.Where(t => t.matricule == matricule).Select(t => t.tuteur_id).ToArray();
+            
             //Vérif : si l'étudiant est déjà en Offre de tutorat (mais pas encore de tutorat trouvé) : 
+            ViewBag.listCoursOffre = coursEtu; 
 
-            ViewBag.listCoursOffre = coursEtu; //list;
-
-            if(tuteuridstmp.Length != 0 ||tuteurids.Length != 0)
-            {
-                ViewBag.DejaTuteur = true;
-            } else { ViewBag.DejaTuteur = false; }
+            if(tuteuridstmp.Length != 0 || tuteurids.Length != 0)
+            { ViewBag.DejaTuteur = true; } else { ViewBag.DejaTuteur = false; }
 
             return View();
         }
 
+        /// <summary>
+        /// Gestion des demandes de l'étudiant : envoie les cours sélectionnés en BDDtemp
+        /// </summary>
+        /// <param name="model"> La liste de cours </param>
+        /// <returns> Redirige à l'index </returns>
         [HttpPost]
         public ActionResult Offre(listeTuteurTmp model)
         {
@@ -191,7 +208,7 @@ namespace Tutorat.Controllers
                         tuteurID = bddtemp.tuteurtmp.Max(u => u.tuteur_id);
                     }
 
-                    model.Items[i].matricule = Session["matricule"].ToString();
+                    model.Items[i].matricule = getMatricule();
                     Session["EnOffre"] = true;
                     ttemp.matricule = model.Items[i].matricule;
                     ttemp.dateInsc = DateTime.Now;
@@ -206,20 +223,34 @@ namespace Tutorat.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+
+        /// <summary>
+        /// Ajout des tuteurtmp et tuteurCourstmp en BDDtmp + sauvegarde de la BDDtmp
+        /// </summary>
+        /// <param name="t"> tuteurtmp </param>
+        /// <param name="tc"> tuteurCourstmp</param>
         public void enregTuteur(tuteurtmp t, tuteurCourstmp tc)
         {
             bddtemp.tuteurtmp.Add(t);
             bddtemp.tuteurCourstmp.Add(tc);
-            //SaveChanges ici pour qu'il enregistre chaque item sélectionné
             bddtemp.SaveChanges();
         }
 
-        // GET: Tutorat/Reglement
-        public ActionResult Reglement()
+        /// <summary>
+        /// Affichage du guide pratique
+        /// </summary>
+        /// <returns> Une Vue </returns>
+        // GET: Tutorat/GuidePratique
+        public ActionResult GuidePratique()
         {
             return View();
         }
 
+        /// <summary>
+        /// Créée une liste pour l'affichage des prestations
+        /// </summary>
+        /// <returns> La liste pour le ViewBag</returns>
         public List<tutoratInfos> ViewBagPrestations()
         {
             int[] idTutorat = getIdTutorat(getMatricule());
@@ -231,107 +262,64 @@ namespace Tutorat.Controllers
                 string lib = (from c in db.cours from t in db.tutorat where t.tutorat_id == j && t.cours_id == c.cours_id select c.libelle).FirstOrDefault();
                 int idTuteur = (from t in db.tutorat where t.tutorat_id == j select t.tuteur_id).First();
                 int dureeRestante = (from t in db.tutorat where t.tutorat_id == j select t.tempsTotal).First();
+                int idDemandeur = (from t in db.tutorat where t.tutorat_id == j select t.demandeur_id).First();
+                string matriculeDem = (from d in db.demandeur where d.demandeur_id == idDemandeur select d.matricule).First();
+                string nomPrenomDem = (from e in db.etudiant where e.matricule == matriculeDem select e.nom + " " + e.prenom).First();
                 // En BDD est stocké le temps total RESTANT. On affiche le temps RESTANT !
                 if (dureeRestante != 0)
                 {
-                    tutInfo.Add(new tutoratInfos { tutorat_id = j, tuteur_id = idTuteur, dureeRestante = dureeRestante, cours_id = id, cours_libelle = lib });
+                    tutInfo.Add(new tutoratInfos { tutorat_id = j, tuteur_id = idTuteur, matriculeDemandeur = matriculeDem, nomPrenomDemandeur = nomPrenomDem, dureeRestante = dureeRestante, cours_id = id, cours_libelle = lib });
                 }
             };
             return(tutInfo);
         }
 
+        /// <summary>
+        /// Encodage des Prestations [GET]
+        /// </summary>
+        /// <returns>
+        /// Affiche la vue
+        /// </returns>
         public ActionResult MesPrestations()
         {
             //Tableau de int car un étudiant peut avoir plusieurs tutorats
-
             ViewBag.infos = ViewBagPrestations();
-            //Envoyer à la View une liste de model prestation
+
             return View();
         }
 
+        /// <summary>
+        /// Récupère les prestations complétés (1 par cours maximum)
+        /// </summary>
+        /// <param name="prtmp"> Liste de prestations </param>
+        /// <returns> Redirige à l'index </returns>
         [HttpPost]
         public ActionResult MesPrestations(listePrestationtmp prtmp)
         {
-            // Problème 1 : On ne peut pas required les champs (sinon on force les deux encodages) => L'utilisateur peut donc ne pas rentrer de données... PROBLEME !!
             ViewBag.infos = ViewBagPrestations();
 
-            //Continue avec problème non résolu :(
             foreach (var i in prtmp.Items)
             {
-                //Retirer cette vérif si problème résolu :
-                if(i.compteRendu != null &&  i.dureePrestation != 0 && i.tuteur_id != 0 && i.tutorat_id != 0)
+                if (i.compteRendu != null && i.dureePrestation != 0 && i.tuteur_id != 0 && i.tutorat_id != 0)
                 {
                     int sum = (bddtemp.prestationtmp.Where(x => x.tuteur_id == i.tuteur_id && x.tutorat_id == i.tutorat_id && x.datePrestation == i.datePrestation)
                         .Select(x => x.dureePrestation)
                         .DefaultIfEmpty(0)
                         .Sum()) + i.dureePrestation;
                     bddtemp.prestationtmp.Add(i);
-                    if (sum < 121) {
-                      bddtemp.SaveChanges();
+                    if (sum < 181)
+                    {
+                        bddtemp.SaveChanges();
+                        ViewData["save"] = "Données enregistrées !";
                     }
-                    //Releasing "unmanaged" resources
-                    bddtemp.Dispose();
+                    else { ViewData["save"] = "Erreur : Durées maximales autorisées. "; }
+
                 }
+                else { ViewData["save"] = "Erreur : Données manquantes ! Veuillez renseigner tous les champs."; }
 
             }
-            return RedirectToAction("Index", "Home");
-        }
-
-        /* ACTUELLEMENT : UNIQUEMENT AFFICHAGE DES ONGLETS ET PAGES ASSOCIÉS (DEMANDE, EXPLANATION, OFFRE, REGLEMENT (a finir)
-         * A REVOIR PLUS TARD : 
-         * Creation de tutorat,
-         * **/
-
-                    // GET: Tutorat/Create
-        public ActionResult Create()
-        {
-            // TO DELETE
-            return View();
-        }
-
-        // POST: Tutorat/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "tutorat_id,demandeur_id,cours_id,commentaire,dateResign")] tutorat tutorat)
-        {
-            // TO DELETE : raison : la creation d'un tutorat ne suffit pas ! (il faut créer aussi les demandeurs et tuteurs)
-            if (ModelState.IsValid)
-            {
-                db.tutorat.Add(tutorat);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(tutorat);
-        }
-
-        // GET: Tutorat/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            // TO DELETE
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tutorat tutorat = db.tutorat.Find(id);
-            if (tutorat == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tutorat);
-        }
-
-        // POST: Tutorat/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            tutorat tutorat = db.tutorat.Find(id);
-            db.tutorat.Remove(tutorat);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            bddtemp.Dispose();
+            return View();// RedirectToAction("Index", "Home");
         }
 
         protected override void Dispose(bool disposing)

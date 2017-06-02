@@ -16,6 +16,11 @@ namespace Tutorat.Controllers
         private Ephec bdd = new Ephec();
         private EphecTemp bddtemp = new EphecTemp();
 
+        /// <summary>
+        /// Récupère les infos des demandeurs du cours depuis les deux BDD
+        /// </summary>
+        /// <param name="coursID"> l'id d'un cours</param>
+        /// <returns> Objets contenant les infos des demandeurs pour chaque cours</returns>
         private IEnumerable<gestionTutorat> InfosDemandeurstmp(int coursID)
         {
             if (coursID != 0)
@@ -71,11 +76,13 @@ namespace Tutorat.Controllers
             return demandesTemp2;
         }
 
+        /// <summary>
+        /// Récupère les infos des tuteurs du cours depuis les deux BDD
+        /// </summary>
+        /// <param name="coursID"> l'id d'un cours</param>
+        /// <returns> Objets contenant les infos des tuteurs  pour chaque cours</returns>
         private IEnumerable<gestionTutorat> InfosTuteurstmp(int coursID)
         {
-            // Utilisation de gestionTutorat, dans ce cas-ci, pas de matriculeTuteurPref (le laisser à null)
-            // Mais uilisation de cote, qui représente la cote pour ce cours.
-
             if (coursID != 0)
             {
                 IEnumerable<gestionTutorat> tuteurTemp =
@@ -123,13 +130,47 @@ namespace Tutorat.Controllers
             return tuteurTemp2;
         }
 
+        /// <summary>
+        /// Affiche le dropdown de cours de 1ère.
+        /// </summary>
+        /// <returns> Affiche la page DemandesTutorat</returns>
+        public ActionResult DemandesTutorat()
+        {
+            //Dropdown de Cours :
+            ViewBag.DDCours = GenereCours();
 
-        // GET: GestionTutorat
-        public ActionResult DemandesTutorat(int id)
+            return View();
+        }
+
+        /// <summary>
+        /// Envoie à DemandesTutoratDeux l'id du cours
+        /// </summary>
+        /// <param name="DDCours">Récupère depuis la méthode GET l'id du cours</param>
+        /// <returns> Renvoie à DemandesTutoratDeux GET </returns>
+        [HttpPost]
+        public ActionResult DemandesTutorat(int DDCours)
+        {
+            // Si dd != 0, afficher partialView
+            // Si dd == 0, Ne rien faire
+            if (DDCours == 0)
+            {
+                return View();
+            }
+            return RedirectToAction("DemandesTutoratDeux", "GestionTutorat", new { id = DDCours });
+
+        }
+
+
+        /// <summary>
+        /// Affiche la liste des demandeurs pour le cours id donnée avec toutes les informations et le dropdown de tuteurs pour ce cours id.
+        /// </summary>
+        /// <param name="id"> cours id </param>
+        /// <returns> Affiche la liste des demandeurs pour le cours id</returns>
+        public ActionResult DemandesTutoratDeux(int id)
         {
             ViewBag.infosDemandeurs = InfosDemandeurstmp(id);
 
-            // Dropdown de tuteur, recherche dans  les 2 bdd :
+            // Dropdown des informations dtuteur
             IEnumerable<gestionTutorat> tut = InfosTuteurstmp(id);
 
             List<SelectListItem> item = tut
@@ -145,8 +186,14 @@ namespace Tutorat.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Gère la mise en relation du tuteur avec son tutoré (copieBDD)
+        /// </summary>
+        /// <param name="model">liste de id nécessaire pour récupérer la informations du demandeur et du tuteur</param>
+        /// <param name="id"> id du cours</param>
+        /// <returns> Affichage de la vue</returns>
         [HttpPost]
-        public ActionResult DemandesTutorat(listAccordTutorat model, int id)
+        public ActionResult DemandesTutoratDeux(listAccordTutorat model, int id)
         {
             ViewBag.infosDemandeurs = InfosDemandeurstmp(id);
             IEnumerable<gestionTutorat> tut = InfosTuteurstmp(id);
@@ -162,6 +209,11 @@ namespace Tutorat.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Fonction pour copier les données des demandeursTmp et tuteursTmp de la BDDtmp en BDD définitive EPHEC.
+        /// </summary>
+        /// <param name="mod"> La liste des données des id nécessaires pour récupérer les données en BDD</param>
+        /// <returns> Renvoie 0 si tout s'est bien passé.</returns>
         public int copieBDD(listAccordTutorat mod)
         {
             foreach (var i in mod.item)
@@ -276,27 +328,12 @@ namespace Tutorat.Controllers
         }
 
 
-        public ActionResult DemandesTutoratDeux()
-        {
-            //Dropdown de Cours :
-            ViewBag.DDCours = GenereCours();
 
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult DemandesTutoratDeux(int DDCours)
-        {
-            // Si dd != 0, afficher partialView
-            // Si dd == 0, Ne rien faire
-            if (DDCours == 0)
-            {
-                return View();
-            }
-            return RedirectToAction("DemandesTutorat", "GestionTutorat", new { id = DDCours });
-
-        }
-
+        /// <summary>
+        /// Affichage des informations des tutorats
+        /// </summary>
+        /// <param name="tut"> Liste des tutorats </param>
+        /// <returns> Renvoie la liste des informations tutorats (tuteur + demandeurà)</returns>
         public List<affichageTutorat> ajoutInfoTutorat(List<tutorat> tut)
         {
             List<affichageTutorat> affichageTut = new List<affichageTutorat>();
@@ -320,17 +357,29 @@ namespace Tutorat.Controllers
 
             return affichageTut;
         }
+
+        /// <summary>
+        /// Affichage de la liste indicative tuteursTmp
+        /// </summary>
+        /// <returns> Une vue avec la liste des tuteurs temporaires</returns>
         public ActionResult ListTuteursTmp()
         {
             return View(InfosTuteurstmp(0));
         }
 
+        /// <summary>
+        /// Affichage de la liste indicative demandeursTmp
+        /// </summary>
+        /// <returns> Une vue avec la liste des demandeurs temporaires</returns>
         public ActionResult ListDemandeursTmp()
         {
             return View(InfosDemandeurstmp(0));
         }
 
-
+        /// <summary>
+        /// Affichage des tutorats en cours (où temps total > 0)
+        /// </summary>
+        /// <returns> Une vue </returns>
         public ActionResult TutoratEnCours()
         {
             /* Une fois les tutorats confirmés (& ajoutés dans la BDD Ephec) */
@@ -343,6 +392,10 @@ namespace Tutorat.Controllers
             return View(tutEnCours);
         }
 
+        /// <summary>
+        /// Affichage des tutorats finis (où temps total = 0)
+        /// </summary>
+        /// <returns> Une vue </returns>
         public ActionResult TutoratFini()
         {
             List<tutorat> tut;
@@ -354,6 +407,11 @@ namespace Tutorat.Controllers
             return View(tut);
         }
 
+        /// <summary>
+        /// Affichage de la vue concernant l'edit des informations du tutorat et mets à jour la table dans la BDD définitive
+        /// </summary>
+        /// <param name="id"> id du tutorat à modifier</param>
+        /// <returns> Affichage de la vue Edit/id </returns>
         // GET: Tutorat/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -369,9 +427,13 @@ namespace Tutorat.Controllers
             return View(tutorat);
         }
 
+
+        /// <summary>
+        /// Édite les informations du tutorat et mets à jour la table dans la BDD définitive
+        /// </summary>
+        /// <param name="id"> id du tutorat à modifier</param>
+        /// <returns> Affichage de la vue Edit/id </returns>
         // POST: Tutorat/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "tutorat_id, demandeur_id, tuteur_id, cours_id, commentaire,dateResign, tempsTotal")] tutorat t)
@@ -385,12 +447,20 @@ namespace Tutorat.Controllers
             return View(t);
         }
 
+        /// <summary>
+        /// Affichage des explications de la Gestion Tutorat
+        /// </summary>
+        /// <returns> Une vue </returns>
         public ActionResult Explication()
         {
 
             return View();
         }
 
+        /// <summary>
+        /// Affichage du dropdown des tuteurs
+        /// </summary>
+        /// <returns> Une Vue </returns>
         public ActionResult GestionPrestationsUn()
         {
             List<SelectListItem> ListeDD = new List<SelectListItem>();
@@ -413,6 +483,11 @@ namespace Tutorat.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Envoie le matricule du tuteur à GestionPrestationDeux et l'affiche 
+        /// </summary>
+        /// <param name="tuteurs"></param>
+        /// <returns> Redirection à GestionPrestationDeux GET </returns>
         [HttpPost]
         public ActionResult GestionPrestationsUn(string tuteurs)
         {
@@ -423,9 +498,14 @@ namespace Tutorat.Controllers
             return RedirectToAction("GestionPrestationsDeux", "GestionTutorat", new { matricule = tuteurs });
         }
 
+        /// <summary>
+        /// Récupère le matricule de GestionPrestationUn et affiche les PrestationsTmp pour validation.
+        /// </summary>
+        /// <param name="matricule"> Le matricule du tuteur </param>
+        /// <returns> Affiche la Vue </returns>
         public ActionResult GestionPrestationsDeux(string matricule)
         {
-            //Prendre la liste des tuteurs_id where matricule (plusieurs tuteurs_id par matricule possible)
+            //Prendre la liste des tuteurs_id where matricule est celui entré dans le dropdown (plusieurs tuteurs_id par matricule possible)
             int[] tuteurs_id = bdd.tuteur.Where(t => t.matricule == matricule).Select(t => t.tuteur_id).ToArray();
 
             var items = bddtemp.prestationtmp
@@ -459,6 +539,12 @@ namespace Tutorat.Controllers
             return View(listPrest);
         }
 
+        /// <summary>
+        /// Gère la validation des Prestations et les enregistre en BDD définitive
+        /// </summary>
+        /// <param name="matricule"> Matricule du tuteur </param>
+        /// <param name="ListPrest"> La liste des prestations validée ou non </param>
+        /// <returns> Renvoie à la page index si l'encodage est OK </returns>
         [HttpPost]
         public ActionResult GestionPrestationsDeux(string matricule, listePrestationtmp ListPrest)
         {
@@ -492,6 +578,7 @@ namespace Tutorat.Controllers
 
                     if (ListPrest.Items[i] != null)
                     {
+                        // Retrait de la prestationTmp puisque validée
                         prestationtmp supp = bddtemp.prestationtmp.Where(p => p.tuteur_id == prest.tuteur_id && p.datePrestation == prest.datePrestation && p.dureePrestation == prest.dureePrestation && p.compteRendu == prest.compteRendu).First();
                         bddtemp.prestationtmp.Remove(supp);
                         bddtemp.SaveChanges();

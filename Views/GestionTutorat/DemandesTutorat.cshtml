@@ -1,74 +1,28 @@
-﻿@model Tutorat.Models.listAccordTutorat
+﻿
 @{
-    ViewBag.Title = "DemandesTutorat";
+    ViewBag.Title = "DemandesTutoratDeux";
 }
 
-<h2>Demandes de tutorat</h2>
+<h2>DemandesTutoratDeux</h2>
 
-<p> Cette page ne sert qu'à titre d'exemple. Elle est fonctionnelle mais ne sera en réalité pas utilisée dans Eperso ! </p>
-<p> Il faudra prévoir une migration et adaptation dans l'outil STI.net.</p>
-
-<p> Cette page représente les étudiants demandeurs qui ne sont pas encore mis en relation avec un tuteur potentiel.</p>
-<p> Une page historique des demandes reprend les tutorats déjà en place. C'est dans cette page que les modifications des tutorats sont pris en charge (augmentation du nombre d'heure par exemple).</p>
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-primary list-panel" id="list-panel">
-            <div class="panel-heading list-panel-heading">
-                <h1 class="panel-title list-panel-title">Demande de tutorat  :</h1>
+ @using (Html.BeginForm("DemandesTutorat", "GestionTutorat"))
+ {
+    <div class="dropdown ">
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                Choix du cours :
             </div>
-             <!-- BEGIN FORM : -->
-            @using (Ajax.BeginForm("DemandesTutorat", "GestionTutorat",
-                new AjaxOptions { LoadingElementId = "loader", OnSuccess = "onSuccess" }))
-            {
-            <div class="panel-body">
-                <table id="assets-data-table"
-                       class="table table-striped table-bordered"
-                       style="width:100%">
-                    <thead>
-                        <tr>
-                            <th> ID - matricule</th>
-                            <th> Nom - Prénom </th>
-                            <th> cours_id </th>
-                            <th> cours_libelle</th>
-                            <th> commentaire </th>
-                            <th> date_insc </th>
-                            <th> matricule Tuteur Pref</th>
-                            <th> étudiant associé </th>
-                            <th> accord</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{ int i = 0;}
-                        @foreach (var person in ViewBag.infosDemandeurs) /* Envoyer les données par viewBag et les récup par model*/
-                        {
-                            @Html.HiddenFor(m => m.item[i].demandeur_id, new { @Value = @person.demandeur_id})
-                            <tr>
-                                <td>@person.etudiant_id - @person.matricule</td>
-                                <td>@person.nom - @person.prenom </td>
-                                <td>@Html.HiddenFor(m => m.item[i].cours_id, new { @Value = @person.cours_id }) @person.cours_id  </td>
-                                <td>@person.cours_libelle</td>
-                                <td>@person.commentaire</td>
-                                <td>@person.dateInsc</td>
-                                <td>@person.matriculeTuteurPref</td>
-                                <td>@*@Html.HiddenFor(m => m.item[i].matricule) @Html.DropDownList("tuteurs") *@
-                                    @Html.DropDownListFor(m => m.item[i].tuteur_id, (IEnumerable<SelectListItem>) ViewBag.tuteurs, "Please Select")
-                                </td>  
-                                <td>@Html.CheckBoxFor(m => m.item[i].select)</td>
-                            </tr>
-                            i++;
-                        }
-                    </tbody>
-                </table>
+            <div class="dropdown-toggle col-md-5">
+                @Html.DropDownList("DDCours")
             </div>
-            <input type="submit" value="Soumettre" />
-            }
-        </div>
+      </div>
+        <input type="submit" value="Soumettre" />
     </div>
-</div>
+ }
 
 <div>
     @Html.ActionLink("Liste de tuteurs", "ListTuteurs", "GestionTutorat")<br />
     @Html.ActionLink("Liste de demandeurs", "ListDemandeurs", "GestionTutorat")
 </div>
+
+

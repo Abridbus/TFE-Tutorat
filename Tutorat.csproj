@@ -284,32 +284,19 @@
     <Content Include="Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\cours\Create.cshtml" />
-    <Content Include="Views\cours\Delete.cshtml" />
-    <Content Include="Views\cours\Details.cshtml" />
-    <Content Include="Views\cours\Edit.cshtml" />
     <Content Include="Views\cours\Index.cshtml" />
-    <Content Include="Views\etudiants\CreateEtuCours.cshtml" />
-    <Content Include="Views\Tutorat\Create.cshtml" />
-    <Content Include="Views\Tutorat\Delete.cshtml" />
-    <Content Include="Views\Tutorat\Details.cshtml" />
     <Content Include="Views\GestionTutorat\Edit.cshtml" />
-    <Content Include="Views\Tutorat\Index.cshtml" />
     <Content Include="Views\Tutorat\Demande.cshtml" />
     <Content Include="Views\Tutorat\Explication.cshtml" />
     <Content Include="Views\Tutorat\Offre.cshtml" />
-    <Content Include="Views\Tutorat\Reglement.cshtml" />
-    <Content Include="Views\Tutorat\Test.cshtml" />
-    <Content Include="Views\Tutorat\Test2.cshtml" />
-    <Content Include="Views\Tutorat\Test3.cshtml" />
-    <Content Include="Views\Tutorat\Save.cshtml" />
+    <Content Include="Views\Tutorat\GuidePratique.cshtml" />
     <Content Include="Views\Eperso\Info.cshtml" />
     <Content Include="Views\Eperso\Cours.cshtml" />
     <Content Include="Views\Tutorat\MesPrestations.cshtml" />
     <Content Include="Views\Eperso\CoursInscrits.cshtml" />
-    <Content Include="Views\GestionTutorat\DemandesTutorat.cshtml" />
-    <Content Include="Views\GestionTutorat\ListTuteursTmp.cshtml" />
     <Content Include="Views\GestionTutorat\DemandesTutoratDeux.cshtml" />
+    <Content Include="Views\GestionTutorat\ListTuteursTmp.cshtml" />
+    <Content Include="Views\GestionTutorat\DemandesTutorat.cshtml" />
     <Content Include="Views\GestionTutorat\ListDemandeursTmp.cshtml" />
     <Content Include="Views\GestionTutorat\TutoratEnCours.cshtml" />
     <Content Include="Views\GestionTutorat\TutoratFini.cshtml" />
@@ -318,10 +305,10 @@
     <Content Include="Views\GestionTutorat\GestionPrestationsDeux.cshtml" />
     <Content Include="Views\Eperso\Explication.cshtml" />
     <Content Include="Views\etudiants\Index.cshtml" />
+    <Content Include="Views\Tutorat\ConfirmationPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Defaut\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

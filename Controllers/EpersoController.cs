@@ -18,18 +18,20 @@ namespace Tutorat.Controllers
     {
         private Ephec bdd = new Ephec();
 
-        // GET: Eperso/Info
+        /// <summary>
+        /// Contient les informations de l'étudiant récupérées en BDD depuis le mail
+        /// </summary>
+        /// <returns> Affiche la page info </returns>
         public ActionResult Info()
         {
             etudiant InfoEtudiant = bdd.etudiant.FirstOrDefault(u => u.mail.Contains(System.Web.HttpContext.Current.User.Identity.Name));
             return View(InfoEtudiant);
         }
-        
-        /*
-         * Si l'étudiant n'a pas de cours pour le moment : afficher le dropdown de cours 
-         * Si l'étudiant a déjà enregistré ses cours : table des cours (avec résultats?)
-         * */
 
+        /// <summary>
+        ///  Affiche la page Cours si l'étudiant n'a pas de cours OU CoursInscrits si il en a
+        /// </summary>
+        /// <returns> Affiche la page en fonction de la variable session créée à la connexion</returns>
         public ActionResult Cours()
         {
            
@@ -43,6 +45,10 @@ namespace Tutorat.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Tableau des cours et résultats de l'étudiant
+        /// </summary>
+        /// <returns> Affiche la page avec la liste des cours de l'étudiant</returns>
         public ActionResult CoursInscrits()
         {
             int id = getIdEtudiant();
@@ -55,6 +61,7 @@ namespace Tutorat.Controllers
                                    select new resultCours { cours_id = c.cours_id, libelle = c.libelle, code = c.code, annee = c.annee };
             ViewBag.etuR = etuCours;
 
+            // Créé un objet resultCours pour l'affichage de la liste des cours et résultats de l'étudiant
             IEnumerable<resultCours> etuResult = from e in bdd.etudiant
                                                  from c in bdd.cours
                                                  from er in bdd.etuResult
@@ -71,6 +78,11 @@ namespace Tutorat.Controllers
 
         }
 
+        /// <summary>
+        ///  Récupèré les listes de string contenant les ID des cours et les cotes entrées (si existent) pour les ajouter en BDD etuCours et etuResult (si existe)
+        /// </summary>
+        /// <param name="liste"> récupère les cours et résultats entrés par l'étudiant </param>
+        /// <returns> Retourne à la page index si les données ont correctement été récupéré</returns>
         [HttpPost]
         public ActionResult Cours(listCoursResult liste)
         {
@@ -104,9 +116,8 @@ namespace Tutorat.Controllers
                     etuRes.cote = cotetmp;
                     bdd.etuResult.Add(etuRes);
                 }
-                //LINQ to Entities does not recognize the method 'Int32 Parse(System.String)' method, and this method cannot be translated into a store expression.
-                // ERROR
 
+                //Ajout des cours de l'étudiant
                 int codeCours = int.Parse(DDCours[i]);
                 cours c = bdd.cours.FirstOrDefault(u => u.cours_id == codeCours);
                 listc.Add(c);
