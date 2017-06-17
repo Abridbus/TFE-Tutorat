@@ -135,7 +135,7 @@ namespace Tutorat.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult Explication()
+        public ActionResult Explications()
         {
             return View();
         }

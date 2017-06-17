@@ -20,18 +20,25 @@ namespace Tutorat.Models
 
     public class tutoratInfos
     {
+        [Display(Name = "Tutorat ID")]
         public int tutorat_id { get; set; }
 
+        [Display(Name = "Tuteur ID")]
         public int tuteur_id { get; set; }
 
+        [Display(Name = "Matricule du demandeur")]
         public string matriculeDemandeur { get; set; }
 
+        [Display(Name = "Nom et prénom du demandeur")]
         public string nomPrenomDemandeur { get; set; }
 
+        [Display(Name = "Durée restante")]
         public int dureeRestante { get; set; }
 
+        [Display(Name = "Cours ID")]
         public int cours_id { get; set; }
 
+        [Display(Name = "Libellé du cours")]
         public string cours_libelle { get; set; }
     }
 

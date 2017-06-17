@@ -9,8 +9,6 @@
 <p> Sur cette page vous allez pouvoir remplir votre offre de tutorat pour l'année en cours. </p>
 <p> Les cours sont ceux que vous avez ajouté dans l'onglet Cours de Eperso. </p>
 
-<p> <b> Copier / Coller du formulaire : (Modification à venir)</b></p>
-
 <h3> Cap vers la réussite en 1ère bac à l’<b> EPHEC</b> </h3>
 
 <p>
@@ -19,13 +17,13 @@
 </p>
 @if(ViewBag.DejaTuteur != false)
 {
-    <p style="color:red;"> Attention, vous êtes déjà tuteur ou en proposition de tutorat pour un cours !</p>
+    <p style="color:red;"> Attention, vous êtes déjà tuteur ou en proposition de tutorat pour un ou plusieurs cours !</p>
 }
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary list-panel" id="list-panel">
             <div class="panel-heading list-panel-heading">
-                <h1 class="panel-title list-panel-title">Offre de tutorat pour les cours suivant (PP pas de S ?) :</h1>
+                <h1 class="panel-title list-panel-title">Offre de tutorat pour les cours suivants :</h1>
             </div>
             <!-- BEGIN FORM : -->
             @using (Ajax.BeginForm("Offre", "Tutorat",
@@ -37,11 +35,11 @@
                            style="width:100%">
                         <thead>
                             <tr>
-                                <th>ID - libelle du cours</th>
-                                <th>code</th>
-                                <th>annee</th>
-                                <th>résultat</th>
-                                <th>commentaire (facultatif)</th>
+                                <th>ID - Libelle du cours</th>
+                                <th>Code</th>
+                                <th>Annee</th>
+                                <th>Résultats</th>
+                                <th>Commentaire (facultatif)</th>
                                 <th>Proposition de tutorat</th>
                             </tr>
                         </thead>

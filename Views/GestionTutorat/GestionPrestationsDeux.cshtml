@@ -1,10 +1,14 @@
 ﻿@model Tutorat.Models.listePrestationtmp
 
 @{
-    ViewBag.Title = "GestionPrestationsDeux";
+    ViewBag.Title = "Gestion Prestations ";
 }
 
-<h2> Gestion Prestations </h2>
+<h2> Gestion des prestations </h2>
+
+<p> Dans cette page, le membre du Service d'Aide à la Réussite peut, pour un tuteur donné, valider les prestations.</p>
+<p> Pour ce faire il suffit de cocher la case validation et de soumettre.</p>
+
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-primary list-panel" id="list-panel">
@@ -22,22 +26,19 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Items[1].tutorat_id) - @Html.DisplayNameFor(model => model.Items[1].tuteur_id)
+                                    Libellé du cours
                                 </th>
                                 <th>
-                                    Libellés
+                                    Date de prestation
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Items[1].datePrestation)
+                                    Durée de prestation                                
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Items[1].dureePrestation)
+                                    Compte rendu
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Items[1].compteRendu)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.select[1])
+                                    Validation
                                 </th>
                             </tr>
                         </thead>
@@ -45,14 +46,10 @@
                             @{int i = 0;}
                             @foreach (var item in Model.Items)
                             {
+                                @Html.HiddenFor(m => m.Items[i].tuteur_id)
+                                @Html.HiddenFor(m => m.Items[i].tutorat_id)
+                                @Html.HiddenFor(m => m.Items[i].prestation_id)
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.tutorat_id)
-                                        @Html.HiddenFor(m => m.Items[i].tutorat_id)
-
-                                        @Html.DisplayFor(modelItem => item.tuteur_id)
-                                        @Html.HiddenFor(m => m.Items[i].tuteur_id)
-                                    </td>
                                     <td>
                                         @ViewBag.LibellesCours[i]
                                     </td>

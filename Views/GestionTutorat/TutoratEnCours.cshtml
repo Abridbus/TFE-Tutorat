@@ -1,14 +1,15 @@
 ﻿@model IEnumerable<Tutorat.Models.tutorat>
 
 @{
-    ViewBag.Title = "TutoratEnCours";
+    ViewBag.Title = "Tutorats En Cours";
 }
 
-<h2>Tutorat en cours</h2>
+<h2>Tutorats en cours</h2>
 
 <p> La colonne demandeur comprend : le matricule, le nom et le prénom</p>
 <p> La colonne tuteur comprend : le matricule, le nom et le prénom</p>
 
+<br />
 <p> Cette liste de tutorat reprend les tutorats n'ayant pas encore atteint un temps total de 600 min (10 heures) approuvé par Madame Alen.</p>
 <p> Une fois les 600minutes atteintes, le tutorat est terminé. Pour pouvoir ajouter du temps, il faut éditer le tutorat et entrer la valeur souhaitée dans la ligne "temps total"</p>
 

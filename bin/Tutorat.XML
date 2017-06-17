@@ -1,0 +1,268 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Tutorat</name>
+    </assembly>
+    <members>
+        <member name="M:Tutorat.Controllers.DefautController.getIdEtudiant">
+            <summary>
+             Récupère en BDD l'étudiant ID depuis le mail et l'ajoute à la variable Session
+            </summary>
+            <returns> intEtudiant ID </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.DefautController.getMatricule">
+            <summary>
+            Récupère en BDD le matricule depuis le mail de l'étudiant
+            </summary>
+            <returns> String matricule </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.DefautController.getIdTutorat(System.String)">
+            <summary>
+            Un étudiant ayant un seul matricule peut avoir plusieurs tuteurs_id
+            </summary>
+            <param name="matricule"> Matricule du tuteur</param>
+            <returns> Table int de tutorat_id </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.DefautController.setSessionEtudiant(System.String)">
+            <summary>
+            Créée le variable Session comprenant les infos de l'étudiant connecté
+            </summary>
+            <param name="mail"> Mail de l'étudiant connecté</param>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Tutorat.Controllers.DefautController.GenereCours" -->
+        <member name="M:Tutorat.Controllers.EpersoController.Info">
+            <summary>
+            Contient les informations de l'étudiant récupérées en BDD depuis le mail
+            </summary>
+            <returns> Affiche la page info </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.EpersoController.Cours">
+            <summary>
+             Affiche la page Cours si l'étudiant n'a pas de cours OU CoursInscrits si il en a
+            </summary>
+            <returns> Affiche la page en fonction de la variable session créée à la connexion</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.EpersoController.CoursInscrits">
+            <summary>
+            Tableau des cours et résultats de l'étudiant
+            </summary>
+            <returns> Affiche la page avec la liste des cours de l'étudiant</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.EpersoController.Cours(Tutorat.Models.listCoursResult)">
+            <summary>
+             Récupèré les listes de string contenant les ID des cours et les cotes entrées (si existent) pour les ajouter en BDD etuCours et etuResult (si existe)
+            </summary>
+            <param name="liste"> récupère les cours et résultats entrés par l'étudiant </param>
+            <returns> Retourne à la page index si les données ont correctement été récupéré</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.InfosDemandeurstmp(System.Int32)">
+            <summary>
+            Récupère les infos des demandeurs du cours depuis les deux BDD
+            </summary>
+            <param name="coursID"> l'id d'un cours</param>
+            <returns> Objets contenant les infos des demandeurs pour chaque cours</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.InfosTuteurstmp(System.Int32)">
+            <summary>
+            Récupère les infos des tuteurs du cours depuis les deux BDD
+            </summary>
+            <param name="coursID"> l'id d'un cours</param>
+            <returns> Objets contenant les infos des tuteurs  pour chaque cours</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.DemandesTutorat">
+            <summary>
+            Affiche le dropdown de cours de 1ère.
+            </summary>
+            <returns> Affiche la page DemandesTutorat</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.DemandesTutorat(System.Int32)">
+            <summary>
+            Envoie à DemandesTutoratDeux l'id du cours
+            </summary>
+            <param name="DDCours">Récupère depuis la méthode GET l'id du cours</param>
+            <returns> Renvoie à DemandesTutoratDeux GET </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.DemandesTutoratDeux(System.Int32)">
+            <summary>
+            Affiche la liste des demandeurs pour le cours id donnée avec toutes les informations et le dropdown de tuteurs pour ce cours id.
+            </summary>
+            <param name="id"> cours id </param>
+            <returns> Affiche la liste des demandeurs pour le cours id</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.DemandesTutoratDeux(Tutorat.Models.listAccordTutorat,System.Int32)">
+            <summary>
+            Gère la mise en relation du tuteur avec son tutoré (copieBDD)
+            </summary>
+            <param name="model">liste de id nécessaire pour récupérer la informations du demandeur et du tuteur</param>
+            <param name="id"> id du cours</param>
+            <returns> Affichage de la vue</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.copieBDD(Tutorat.Models.listAccordTutorat)">
+            <summary>
+            Fonction pour copier les données des demandeursTmp et tuteursTmp de la BDDtmp en BDD définitive EPHEC.
+            </summary>
+            <param name="mod"> La liste des données des id nécessaires pour récupérer les données en BDD</param>
+            <returns> Renvoie 0 si tout s'est bien passé.</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.ajoutInfoTutorat(System.Collections.Generic.List{Tutorat.Models.tutorat})">
+            <summary>
+            Affichage des informations des tutorats
+            </summary>
+            <param name="tut"> Liste des tutorats </param>
+            <returns> Renvoie la liste des informations tutorats (tuteur + demandeurà)</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.ListTuteursTmp">
+            <summary>
+            Affichage de la liste indicative tuteursTmp
+            </summary>
+            <returns> Une vue avec la liste des tuteurs temporaires</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.ListDemandeursTmp">
+            <summary>
+            Affichage de la liste indicative demandeursTmp
+            </summary>
+            <returns> Une vue avec la liste des demandeurs temporaires</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.TutoratEnCours">
+            <summary>
+            Affichage des tutorats en cours (où temps total > 0)
+            </summary>
+            <returns> Une vue </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.TutoratFini">
+            <summary>
+            Affichage des tutorats finis (où temps total = 0)
+            </summary>
+            <returns> Une vue </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.Edit(System.Nullable{System.Int32})">
+            <summary>
+            Affichage de la vue concernant l'edit des informations du tutorat et mets à jour la table dans la BDD définitive
+            </summary>
+            <param name="id"> id du tutorat à modifier</param>
+            <returns> Affichage de la vue Edit/id </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.Edit(Tutorat.Models.tutorat)">
+            <summary>
+            Édite les informations du tutorat et mets à jour la table dans la BDD définitive
+            </summary>
+            <param name="id"> id du tutorat à modifier</param>
+            <returns> Affichage de la vue Edit/id </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.Explications">
+            <summary>
+            Affichage des explications de la Gestion Tutorat
+            </summary>
+            <returns> Une vue </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.GestionPrestationsUn">
+            <summary>
+            Affichage du dropdown des tuteurs
+            </summary>
+            <returns> Une Vue </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.GestionPrestationsUn(System.String)">
+            <summary>
+            Envoie le matricule du tuteur à GestionPrestationDeux et l'affiche 
+            </summary>
+            <param name="tuteurs"></param>
+            <returns> Redirection à GestionPrestationDeux GET </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.GestionPrestationsDeux(System.String)">
+            <summary>
+            Récupère le matricule de GestionPrestationUn et affiche les PrestationsTmp pour validation.
+            </summary>
+            <param name="matricule"> Le matricule du tuteur </param>
+            <returns> Affiche la Vue </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.GestionTutoratController.GestionPrestationsDeux(System.String,Tutorat.Models.listePrestationtmp)">
+            <summary>
+            Gère la validation des Prestations et les enregistre en BDD définitive
+            </summary>
+            <param name="matricule"> Matricule du tuteur </param>
+            <param name="ListPrest"> La liste des prestations validée ou non </param>
+            <returns> Renvoie à la page index si l'encodage est OK </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.Demande">
+            <summary>
+            Demande de tutorat :
+            Affiche une liste de cours auxquels l'étudiant connecté peut s'inscrire
+            </summary>
+            <returns> Une vue </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.Demande(Tutorat.Models.listeDemandeTmp)">
+            <summary>
+            Gestion des demandes de l'étudiant : envoie les cours sélectionnés en BDDtemp
+            </summary>
+            <param name="model"> La liste de cours </param>
+            <returns> Redirige à l'index </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.enregDemande(Tutorat.Models.demandeurtmp,Tutorat.Models.demandeurCourstmp)">
+            <summary>
+            Ajout des demandeurstmp et demandeurCourstmp en BDDtmp + sauvegarde de la BDDtmp
+            </summary>
+            <param name="d"> demandeurtmp </param>
+            <param name="dc"> demandeurCourstmp</param>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.Explications">
+            <summary>
+            Affiche la page d'explication des tutorats
+            </summary>
+            <returns> Une vue </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.Offre">
+            <summary>
+            Offre de tutorat :
+            Affiche une liste de cours auxquels l'étudiant connecté peut s'inscrire
+            </summary>
+            <returns> Une vue </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.Offre(Tutorat.Models.listeTuteurTmp)">
+            <summary>
+            Gestion des demandes de l'étudiant : envoie les cours sélectionnés en BDDtemp
+            </summary>
+            <param name="model"> La liste de cours </param>
+            <returns> Redirige à l'index </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.enregTuteur(Tutorat.Models.tuteurtmp,Tutorat.Models.tuteurCourstmp)">
+            <summary>
+            Ajout des tuteurtmp et tuteurCourstmp en BDDtmp + sauvegarde de la BDDtmp
+            </summary>
+            <param name="t"> tuteurtmp </param>
+            <param name="tc"> tuteurCourstmp</param>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.GuidePratique">
+            <summary>
+            Affichage du guide pratique
+            </summary>
+            <returns> Une Vue </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.ViewBagPrestations">
+            <summary>
+            Créée une liste pour l'affichage des prestations
+            </summary>
+            <returns> La liste pour le ViewBag</returns>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.MesPrestations">
+            <summary>
+            Encodage des Prestations [GET]
+            </summary>
+            <returns>
+            Affiche la vue
+            </returns>
+        </member>
+        <member name="M:Tutorat.Controllers.TutoratController.MesPrestations(Tutorat.Models.listePrestationtmp)">
+            <summary>
+            Récupère les prestations complétés (1 par cours maximum)
+            </summary>
+            <param name="prtmp"> Liste de prestations </param>
+            <returns> Redirige à l'index </returns>
+        </member>
+        <member name="T:Tutorat.Models.listCoursResult">
+            <summary>
+            Modèles de EtuCours pour l'affichage : ensemble de modèles d'étudiants et de cours
+            </summary>
+            
+        </member>
+    </members>
+</doc>

@@ -43,6 +43,7 @@ namespace Tutorat.Models
         [StringLength(255)]
         public string commentaire { get; set; }
 
+        [Display(Name = "Date résiliation")]
         public DateTime? dateResign { get; set; }
 
         [DefaultValue(600)]
@@ -137,7 +138,7 @@ namespace Tutorat.Models
         [StringLength(255)]
         public string commentaire { get; set; }
 
-        [DisplayName("Date résignation")]
+        [DisplayName("Date résiliation")]
         public DateTime? dateResign { get; set; }
 
         [DefaultValue(600)]

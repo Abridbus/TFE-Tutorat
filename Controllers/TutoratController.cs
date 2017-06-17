@@ -136,7 +136,7 @@ namespace Tutorat.Controllers
         /// </summary>
         /// <returns> Une vue </returns>
         // GET: Tutorat/Explanation
-        public ActionResult Explication()
+        public ActionResult Explications()
         {
             return View();
         }

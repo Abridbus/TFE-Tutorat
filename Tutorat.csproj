@@ -35,8 +35,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin\Tutorat.XML</DocumentationFile>
     <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -287,7 +286,7 @@
     <Content Include="Views\cours\Index.cshtml" />
     <Content Include="Views\GestionTutorat\Edit.cshtml" />
     <Content Include="Views\Tutorat\Demande.cshtml" />
-    <Content Include="Views\Tutorat\Explication.cshtml" />
+    <Content Include="Views\Tutorat\Explications.cshtml" />
     <Content Include="Views\Tutorat\Offre.cshtml" />
     <Content Include="Views\Tutorat\GuidePratique.cshtml" />
     <Content Include="Views\Eperso\Info.cshtml" />
@@ -300,10 +299,10 @@
     <Content Include="Views\GestionTutorat\ListDemandeursTmp.cshtml" />
     <Content Include="Views\GestionTutorat\TutoratEnCours.cshtml" />
     <Content Include="Views\GestionTutorat\TutoratFini.cshtml" />
-    <Content Include="Views\GestionTutorat\Explication.cshtml" />
+    <Content Include="Views\GestionTutorat\Explications.cshtml" />
     <Content Include="Views\GestionTutorat\GestionPrestationsUn.cshtml" />
     <Content Include="Views\GestionTutorat\GestionPrestationsDeux.cshtml" />
-    <Content Include="Views\Eperso\Explication.cshtml" />
+    <Content Include="Views\Eperso\Explications.cshtml" />
     <Content Include="Views\etudiants\Index.cshtml" />
     <Content Include="Views\Tutorat\ConfirmationPage.cshtml" />
   </ItemGroup>

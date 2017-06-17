@@ -10,7 +10,7 @@ using Tutorat.Models;
 
 namespace Tutorat.Controllers
 {
-    [Authorize(Roles = "ConseilSocial")]
+    [Authorize(Roles = "SAR")]
     public class GestionTutoratController : DefautController
     {
         private Ephec bdd = new Ephec();
@@ -218,6 +218,7 @@ namespace Tutorat.Controllers
         {
             foreach (var i in mod.item)
             {
+                if(i.select == true) { 
                 //CONVERT EN INT de tuteur_id car provient de la value d'un dropdown (=type string)!
                 int tuteur_id = Convert.ToInt32(i.tuteur_id);
 
@@ -322,6 +323,7 @@ namespace Tutorat.Controllers
                     bdd.Entry(tupdate).State = EntityState.Modified;
                     bdd.SaveChanges();
                 }
+            }
             }
 
             return 0;
@@ -451,7 +453,7 @@ namespace Tutorat.Controllers
         /// Affichage des explications de la Gestion Tutorat
         /// </summary>
         /// <returns> Une vue </returns>
-        public ActionResult Explication()
+        public ActionResult Explications()
         {
 
             return View();
@@ -546,28 +548,28 @@ namespace Tutorat.Controllers
         /// <param name="ListPrest"> La liste des prestations validée ou non </param>
         /// <returns> Renvoie à la page index si l'encodage est OK </returns>
         [HttpPost]
-        public ActionResult GestionPrestationsDeux(string matricule, listePrestationtmp ListPrest)
+        public ActionResult GestionPrestationsDeux(string matricule, listePrestationtmp listPrest)
         {
 
             List<tutorat> Listtut = new List<tutorat>();
-            for (int i = 0; i < ListPrest.Items.Count(); i++)
+            for (int i = 0; i < listPrest.Items.Count(); i++)
             //foreach(var i in ListPrest.Items)
             {
-                int tutorat_id = ListPrest.Items[i].tutorat_id;
-                if (ListPrest.select[i] == true)
+                int tutorat_id = listPrest.Items[i].tutorat_id;
+                if (listPrest.select[i] == true)
                 {
                     tutorat tut = new tutorat();
                     prestation prest = new prestation()
                     {
-                        tuteur_id = ListPrest.Items[i].tuteur_id,
-                        datePrestation = ListPrest.Items[i].datePrestation,
-                        dureePrestation = ListPrest.Items[i].dureePrestation,
-                        compteRendu = ListPrest.Items[i].compteRendu,
+                        tuteur_id = listPrest.Items[i].tuteur_id,
+                        datePrestation = listPrest.Items[i].datePrestation,
+                        dureePrestation = listPrest.Items[i].dureePrestation,
+                        compteRendu = listPrest.Items[i].compteRendu,
 
                     };
                     // Ajout dans la table M-M PrestationTutorat (Linq style)
                     tut = bdd.tutorat.FirstOrDefault(t => t.tuteur_id == prest.tuteur_id && t.tutorat_id == tutorat_id);
-                    int duree = tut.tempsTotal - ListPrest.Items[i].dureePrestation;
+                    int duree = tut.tempsTotal - listPrest.Items[i].dureePrestation;
                     if (duree >= 0)
                     {
                         tut.tempsTotal = duree;
@@ -576,7 +578,7 @@ namespace Tutorat.Controllers
                     Listtut.Add(tut);
                     prest.tutorat = Listtut;
 
-                    if (ListPrest.Items[i] != null)
+                    if (listPrest.Items[i] != null)
                     {
                         // Retrait de la prestationTmp puisque validée
                         prestationtmp supp = bddtemp.prestationtmp.Where(p => p.tuteur_id == prest.tuteur_id && p.datePrestation == prest.datePrestation && p.dureePrestation == prest.dureePrestation && p.compteRendu == prest.compteRendu).First();

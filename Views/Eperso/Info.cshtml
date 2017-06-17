@@ -6,7 +6,7 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<p> Cette page fournie les informations avec lesquelles l'étudiant c'est inscrit. La page sera utilisée en cas de test grandeur réel.</p>
+<p> Cette page fournie les informations avec lesquelles l'étudiant s'est inscrit. La page sera utilisée en cas de test grandeur réel.</p>
 
 <div>
     <dl class="dl-horizontal">
@@ -71,12 +71,13 @@
 <!-- TO DELETE -->
 <hr />
 <div>
-    <h2> TO DELETE : </h2>
-    <p> Values of var[session]</p>
+    <h2> Valeurs de la variable session : </h2>
+
+    <p> Ces valeurs sont assignées à la connexion de l'utilisateur</p>
     @foreach (string i in Session.Contents)
     {
         <p>
-            La variable " @i " a pour valeur @Session[i].ToString();
+            La variable "@i" a pour valeur @Session[i].ToString().
         </p>
     }
 </div>

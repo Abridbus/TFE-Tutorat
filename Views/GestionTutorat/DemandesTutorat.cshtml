@@ -1,9 +1,11 @@
 ﻿
 @{
-    ViewBag.Title = "DemandesTutoratDeux";
+    ViewBag.Title = "Demandes de Tutorat";
 }
 
-<h2>DemandesTutoratDeux</h2>
+<h2>Demandes de Tutorat</h2>
+
+<p> Sélectionnez un cours pour afficher la liste des demandeurs pour ce cours. Il sera possible d'assigner un tuteur via le menu déroulant et en cochant la validation.</p>
 
  @using (Html.BeginForm("DemandesTutorat", "GestionTutorat"))
  {
@@ -21,8 +23,8 @@
  }
 
 <div>
-    @Html.ActionLink("Liste de tuteurs", "ListTuteurs", "GestionTutorat")<br />
-    @Html.ActionLink("Liste de demandeurs", "ListDemandeurs", "GestionTutorat")
+    @Html.ActionLink("Liste de tuteurs temporaires", "ListTuteursTmp", "GestionTutorat")<br />
+    @Html.ActionLink("Liste de demandeurs temporaires", "ListDemandeursTmp", "GestionTutorat")
 </div>
 
 

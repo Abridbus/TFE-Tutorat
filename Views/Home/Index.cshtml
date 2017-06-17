@@ -24,7 +24,7 @@
         </p>
         <p> @Html.ActionLink("Liste d'étudiants \u00bb", "Index", "etudiants", null, new { @class = " btn btn-info" })</p>
     </div>
-@if (Context.User.IsInRole("ConseilSocial"))
+@if (Context.User.IsInRole("SAR"))
 {
     <div class="col-md-3">
         <h2>Liste de demandeurs tmp</h2>

@@ -73,3 +73,4 @@ D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\Microsoft.Owin.Security.M
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\obj\Debug\Tutorat.dll
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\obj\Debug\Tutorat.pdb
 D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\obj\Debug\Tutorat.csprojResolveAssemblyReference.cache
+D:\Workspace Visual Basic\Projects\Tutorat\Tutorat\bin\Tutorat.XML
